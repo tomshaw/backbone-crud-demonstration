@@ -65,11 +65,8 @@ window.CustomerListView = Backbone.View.extend({
 
 window.PaginatorTemplate = Backbone.View.extend({
 
-    template: _.template($('#PaginatorTemplate').html()),
-
     initialize: function () {
-        this.model.bind("reset", this.render, this);
-        this.model.bind("change", this.render, this);
+        this.template = _.template($("#PaginatorTemplate").html());
     },
 
     render: function (event) {
