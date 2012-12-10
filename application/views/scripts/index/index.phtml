@@ -1,0 +1,65 @@
+<div id="content" class="span12"></div>
+
+<script id="CustomerListView" type="text/html">
+<table class="table table-hover table-bordered" style="width:100%;">
+  <thead>
+    <tr>
+      <th>Customer Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% _.each(customers, function(customer) { %>
+    <tr>
+      <td><%= customer.first_name %> <%= customer.last_name %><br /><%= customer.email %></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+</script>
+
+<script id="PaginatorTemplate" type="text/html">
+<% if(data.pageCount) { %>
+<div class="dataTables_paginate paging_bootstrap pagination" id="jumping">
+  <ul>
+    <% if (data.previous) { %>
+    <li class="prev"><a style="cursor:pointer;" href="#index/page/<%= data.first %>">First</a></li>
+    <% } else { %>
+    <li class="prev disabled"><a href="#">First</a></li>
+    <% } %>
+    <% if (data.previous) { %>
+    <li><a style="cursor:pointer;" href="#index/page/<%= data.previous %>">&larr; Previous</a></li>
+    <% } else { %>
+    <li class="prev disabled"><a href="#">Previous</a></li>
+    <% } %>
+    <% Object.keys(data.pagesInRange).forEach(function(key) { %>
+    <% var page = data.pagesInRange[key]; %>
+    <li <% if(page == data.current) { %>class="active"<% } %>><a style="cursor:pointer;" href="#index/page/<%= page %>"><%= page %></a></li> 
+    <% }); %>
+    <% if (data.next) { %>
+    <li class="next"><a style="cursor:pointer;" href="#index/page/<%= data.next %>">Next &rarr;</a></li>
+    <% } else { %>
+    <li class="next disabled"><a href="#">Next</a></li>
+    <% } %>
+    <% if (data.next) { %>
+    <li class="next"><a style="cursor:pointer;" href="#index/page/<%= data.last %>">Last</a></li>
+    <% } else { %>
+    <li class="next disabled"><a href="#">Last</a></li>
+    <% } %>
+  </ul>
+</div>
+<% } %>
+</script>
+
+<script id="HeaderView" type="text/html">
+<div class="navbar navbar-inverse navbar-fixed-top" style="z-index: 10;">
+  <div class="navbar-inner">
+    <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="#">Backbone Testing</a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li class="add-menu"><a href="#customers/add"><i class="icon-edit icon-white"></i> Add Customer</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</script>
