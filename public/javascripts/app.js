@@ -108,8 +108,8 @@ window.HeaderView = Backbone.View.extend({
 
 var AppRouter = Backbone.Router.extend({
     routes: {
-        ""								: "home",
-        "index/page/:page"				: "pages"
+        ""                              : "home",
+        "index/page/:page"              : "pages"
     },
 
     initialize: function () {
