@@ -84,6 +84,14 @@ window.CustomerListCollection = Backbone.Collection.extend({
     parse: function (response) {
         this.pages = response.pages;
         return response.items;
+    },
+    
+    getPages: function() {
+    	return this.pages;
+    },
+    
+    getCurrentPage: function() {
+    	return this.pages.current;
     }
 });
 
@@ -147,7 +155,7 @@ window.PaginatorTemplate = Backbone.View.extend({
 
     render: function (event) {
         $(this.el).html(this.template({
-            data: this.model.pages
+            data: this.model.getPages()
         }));
         return this;
     }
@@ -177,7 +185,7 @@ window.CustomerModalView = Backbone.View.extend({
 });
 
 window.CustomerAddView = Backbone.View.extend({
-
+	
     initialize: function (options) {
         this.template = _.template($("#CustomerAddView").html());
         this.render();
@@ -202,9 +210,10 @@ window.CustomerAddView = Backbone.View.extend({
 
     save: function () {
         $("#customer-form-modal").modal('hide');
+        var page = 1;
         this.model.save(null, {
             success: function (response) {
-                app.navigate('/', true);
+                app.navigate('#index/page/' + page, true);
                 utils.showAlert('Success!', 'Customer saved successfully!', 'alert-success');
             },
             error: function () {
@@ -216,10 +225,21 @@ window.CustomerAddView = Backbone.View.extend({
 
 window.CustomerEditView = Backbone.View.extend({
 
+	page: 1,
+	
     initialize: function (options) {
         this.template = _.template($("#CustomerEditView").html());
         this.render();
         this.eventAggregator.bind('beforeSave', this.beforeSave, this);
+    },
+    
+    setPage: function (page) {
+    	this.page = page;
+    	return this;
+    },
+    
+    getPage: function () {
+    	return this.page;
     },
 
     events: {
@@ -245,13 +265,14 @@ window.CustomerEditView = Backbone.View.extend({
     },
 
     saveCustomer: function () {
+    	var page = this.getPage();
         this.model.save(null, {
             success: function (response) {
-                app.navigate('/', true);
-                utils.showAlert('Success!', 'Customer saved successfully!', 'alert-success');
+            	app.navigate('#index/page/' + page, true);
+                utils.showAlert('Success!', 'Customer updated successfully!', 'alert-success');
             },
             error: function () {
-                utils.showAlert('Error', 'An error occurred saving this customer.', 'alert-error');
+                utils.showAlert('Error', 'An error occurred while updating this customer.', 'alert-error');
             }
         });
     }
@@ -271,6 +292,9 @@ window.CustomerReviewView = Backbone.View.extend({
 });
 
 var AppRouter = Backbone.Router.extend({
+	
+	page: 1,
+	
     routes: {
         "": "home",
         "index/page/:page": "pages",
@@ -310,6 +334,7 @@ var AppRouter = Backbone.Router.extend({
             }
         });
         this.headerView.menuItem('home-menu');
+        this.page = page;
     },
 
     addCustomer: function () {
@@ -331,12 +356,13 @@ var AppRouter = Backbone.Router.extend({
         var customer = new Customer({
             customer_id: customer_id
         });
+        var currentPage = this.page;
         customer.fetch({
             success: function () {
                 $(document.body).append(new CustomerModalView().el);
                 $('#customer-modal-body').html(new CustomerEditView({
                     model: customer
-                }).render().el);
+                }).setPage(currentPage).render().el);
                 $("#customer-form-modal").modal({
                     show: true,
                     backdrop: true,
