@@ -1,16 +1,48 @@
 <div id="content" class="span12"></div>
 
+<script id="HeaderView" type="text/html">
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="/">BBCRUD - Backbone Testing</a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li class="home-menu"><a href="/"><i class="icon-forward icon-white"></i> Home</a></li>
+          <li class="add-menu"><a href="#index/add"><i class="icon-forward icon-white"></i> Add Customer</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="alert alert-success fade in">
+  <a class="close" data-dismiss="alert" href="#"><span id="message-icon" class="icon-remove"></span></a>
+  <h3 style="margin-top:5px;">System Message</h3> 
+  <div class="message"></div>
+  <p style="margin-top:15px;"><a class="btn" href="/">Return to menu.</a></p>
+</div>
+</script>
+
 <script id="CustomerListView" type="text/html">
-<table class="table table-hover table-bordered" style="width:100%;">
+<table class="table table-hover table-striped table-bordered table-condensed">
   <thead>
     <tr>
       <th>Customer Name</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>Country</th>
+      <th>Created</th>
+      <th>Updated</th>
     </tr>
   </thead>
   <tbody>
-    <% _.each(customers, function(customer) { %>
-    <tr>
-      <td><%= customer.first_name %> <%= customer.last_name %><br /><%= customer.email %></td>
+    <% customers.each(function(customer) { %>
+    <tr data-href="#index/edit/customer_id/<%= _.escape(customer.get('customer_id') || '') %>">
+      <td>&nbsp;<%= _.escape(customer.get('first_name') || '') %> <%= _.escape(customer.get('last_name') || '') %><br />
+        <a href="mailto:<%= _.escape(customer.get('email') || '') %>" title="Email: <%= _.escape(customer.get('first_name') || '') %> <%= _.escape(customer.get('last_name') || '') %> - <%= _.escape(customer.get('email') || '') %>">[ <%= _.escape(customer.get('email') || '') %> ]</a></td>
+      <td><%= _.escape(customer.get('address') || '') %> <%= _.escape(customer.get('address2') || '') %></td>
+      <td><%= _.escape(customer.get('city') || '') %></td>
+      <td><%= _.escape(customer.get('country') || '') %></td>
+      <td><%= _.escape(customer.get('create_date') || '') %></td>
+      <td><%= _.escape(customer.get('last_update') || '') %></td>
     </tr>
     <% }); %>
   </tbody>
@@ -50,16 +82,131 @@
 <% } %>
 </script>
 
-<script id="HeaderView" type="text/html">
-<div class="navbar navbar-inverse navbar-fixed-top" style="z-index:10;">
-  <div class="navbar-inner">
-    <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="#">BBCRUD - Backbone Testing</a>
-      <div class="nav-collapse collapse">
-        <ul class="nav">
-          <li class="add-menu"><a href="#customers/add"><i class="icon-edit icon-white"></i> Add Customer</a></li>
-        </ul>
-      </div>
-    </div>
+<script id="CustomerReviewView" type="text/html">
+<h1>Customer Review View - <%= _.escape(email || '') %><h1>
+</script>
+
+<script id="CustomerModalView" type="text/html">
+<div class="modal hide fade" id="customer-form-modal">
+  <div class="modal-header">
+    <h3 id="modal-header">Customer Add</h3>
+  </div>
+  <div class="modal-body" id="customer-modal-body"></div>
+  <div class="modal-footer">
+    <button type="reset" data-dismiss="modal" class="btn btn-info">Close</button>
+    <button type="submit" id="submit" data-loading-text="submitting..." class="btn btn-success">Submit</button>
   </div>
 </div>
 </script>
+
+<script id="CustomerAddView" type="text/html">
+<div class="modal hide fade" id="customer-form-modal">
+  <div class="modal-header">
+    <h3 id="modal-header">Customer Add</h3>
+  </div>
+  <div class="modal-body" id="customer-modal-body">
+    <form class="form-horizontal">
+      <fieldset>
+        <div class="control-group">
+          <label class="control-label" for="first_name">First name:</label>
+          <div class="controls">
+            <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
+              <input type="text" class="input-xlarge" id="first_name" name="first_name" value="<%= _.escape(first_name || '') %>">
+              <p class="help-block">Length must be between 3 and 20 characters.</p>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="last_name">Last name:</label>
+          <div class="controls">
+            <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
+              <input type="text" class="input-xlarge" id="last_name" name="last_name" value="<%= _.escape(last_name || '') %>">
+              <p class="help-block">Length must be between 3 and 20 characters.</p>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="email">Email address:</label>
+          <div class="controls">
+            <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
+              <input type="text" class="input-xlarge" id="email" name="email" value="<%= _.escape(email || '') %>">
+              <p class="help-block">Length must be between 3 and 20 characters.</p>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="store_id">Select store:</label>
+          <div class="controls">
+            <select id="store_id" name="store_id">
+              <% _.each(stores, function(val, key) { %>
+              <% var selected = (store_id== key) ? 'selected="selected"' : ''; %>
+              <option value="<%= key %>" <%= selected %>><%= val %></option>
+              <% }); %>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="reset" data-dismiss="modal" class="btn btn-info">Close</button>
+    <button type="submit" id="submit" data-loading-text="submitting..." class="btn btn-success">Submit</button>
+  </div>
+</div>
+</script>
+
+<script id="CustomerEditView" type="text/html">
+<form class="form-horizontal">
+  <input type="hidden" name="customer_id" value="<%= _.escape(customer_id || '') %>">
+  <fieldset>
+    <div class="control-group">
+      <label class="control-label" for="first_name">First name:</label>
+      <div class="controls">
+        <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
+          <input type="text" class="input-xlarge" id="first_name" name="first_name" value="<%= _.escape(first_name || '') %>">
+          <p class="help-block">Length must be between 3 and 20 characters.</p>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="last_name">Last name:</label>
+      <div class="controls">
+        <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
+          <input type="text" class="input-xlarge" id="last_name" name="last_name" value="<%= _.escape(last_name || '') %>">
+          <p class="help-block">Length must be between 3 and 20 characters.</p>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="email">Email address:</label>
+      <div class="controls">
+        <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
+          <input type="text" class="input-xlarge" id="email" name="email" value="<%= _.escape(email || '') %>">
+          <p class="help-block">Length must be between 3 and 20 characters.</p>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="store_id">Select store:</label>
+      <div class="controls">
+        <select id="store_id" name="store_id">
+          <% _.each(stores, function(val, key) { %>
+          <% var selected = (store_id== key) ? 'selected="selected"' : ''; %>
+          <option value="<%= key %>" <%= selected %>><%= val %></option>
+          <% }); %>
+        </select>
+      </div>
+    </div>
+  </fieldset>
+</form>
+</script>
+
+    <!--<div class="control-group">
+      <label class="control-label" for="create_date">Create date:</label>
+      <div class="controls">
+        <div class="input-prepend">
+          <span class="add-on"><i class="icon-home"></i></span><input type="text" class="input-xlarge" id="create_date" name="create_date" value="">
+          <p class="help-block">Length must be between 3 and 20 characters.</p>
+        </div>
+      </div>
+    </div>-->

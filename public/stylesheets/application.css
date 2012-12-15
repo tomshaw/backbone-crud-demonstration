@@ -1,6 +1,23 @@
 @import url("bootstrap.css");
+
 @import url("bootstrap-responsive.css");
 
 body {
-    padding-top: 60px;
+	padding-top: 60px;
+}
+
+.navbar-fixed-top {
+	z-index: 1;
+}
+
+p.help-block {
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 20px;
+}
+
+.alert {
+	display:none;
+	width: 1100px;
+	margin: 0 auto;
 }

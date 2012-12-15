@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 3.5.4
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: May 25, 2012 at 07:25 PM
--- Server version: 5.5.19
--- PHP Version: 5.4.3
+-- Host: 127.0.0.1
+-- Generation Time: Dec 14, 2012 at 05:46 PM
+-- Server version: 5.5.28
+-- PHP Version: 5.3.15
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -60,7 +60,7 @@ proc: BEGIN
     DECLARE last_month_start DATE;
     DECLARE last_month_end DATE;
 
-    /* Some sanity checks... */
+    
     IF min_monthly_purchases = 0 THEN
         SELECT 'Minimum monthly purchases parameter must be > 0';
         LEAVE proc;
@@ -70,21 +70,15 @@ proc: BEGIN
         LEAVE proc;
     END IF;
 
-    /* Determine start and end time periods */
+    
     SET last_month_start = DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH);
     SET last_month_start = STR_TO_DATE(CONCAT(YEAR(last_month_start),'-',MONTH(last_month_start),'-01'),'%Y-%m-%d');
     SET last_month_end = LAST_DAY(last_month_start);
 
-    /*
-        Create a temporary storage area for
-        Customer IDs.
-    */
+    
     CREATE TEMPORARY TABLE tmpCustomer (customer_id SMALLINT UNSIGNED NOT NULL PRIMARY KEY);
 
-    /*
-        Find all customers meeting the
-        monthly purchase requirements
-    */
+    
     INSERT INTO tmpCustomer (customer_id)
     SELECT p.customer_id
     FROM payment AS p
@@ -93,18 +87,15 @@ proc: BEGIN
     HAVING SUM(p.amount) > min_dollar_amount_purchased
     AND COUNT(customer_id) > min_monthly_purchases;
 
-    /* Populate OUT parameter with count of found customers */
+    
     SELECT COUNT(*) FROM tmpCustomer INTO count_rewardees;
 
-    /*
-        Output ALL customer information of matching rewardees.
-        Customize output as needed.
-    */
+    
     SELECT c.*
     FROM tmpCustomer AS t
     INNER JOIN customer AS c ON t.customer_id = c.customer_id;
 
-    /* Clean up */
+    
     DROP TABLE tmpCustomer;
 END$$
 
@@ -116,16 +107,16 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `get_customer_balance`(p_customer_id 
     DETERMINISTIC
 BEGIN
 
-       #OK, WE NEED TO CALCULATE THE CURRENT BALANCE GIVEN A CUSTOMER_ID AND A DATE
-       #THAT WE WANT THE BALANCE TO BE EFFECTIVE FOR. THE BALANCE IS:
-       #   1) RENTAL FEES FOR ALL PREVIOUS RENTALS
-       #   2) ONE DOLLAR FOR EVERY DAY THE PREVIOUS RENTALS ARE OVERDUE
-       #   3) IF A FILM IS MORE THAN RENTAL_DURATION * 2 OVERDUE, CHARGE THE REPLACEMENT_COST
-       #   4) SUBTRACT ALL PAYMENTS MADE BEFORE THE DATE SPECIFIED
+       
+       
+       
+       
+       
+       
 
-  DECLARE v_rentfees DECIMAL(5,2); #FEES PAID TO RENT THE VIDEOS INITIALLY
-  DECLARE v_overfees INTEGER;      #LATE FEES FOR PRIOR RENTALS
-  DECLARE v_payments DECIMAL(5,2); #SUM OF PAYMENTS MADE PREVIOUSLY
+  DECLARE v_rentfees DECIMAL(5,2); 
+  DECLARE v_overfees INTEGER;      
+  DECLARE v_payments DECIMAL(5,2); 
 
   SELECT IFNULL(SUM(film.rental_rate),0) INTO v_rentfees
     FROM film, inventory, rental
@@ -172,8 +163,8 @@ BEGIN
     DECLARE v_rentals INT;
     DECLARE v_out     INT;
 
-    #AN ITEM IS IN-STOCK IF THERE ARE EITHER NO ROWS IN THE rental TABLE
-    #FOR THE ITEM OR ALL ROWS HAVE return_date POPULATED
+    
+    
 
     SELECT COUNT(*) INTO v_rentals
     FROM rental
@@ -1862,15 +1853,15 @@ CREATE TABLE IF NOT EXISTS `customer` (
   KEY `idx_fk_store_id` (`store_id`),
   KEY `idx_fk_address_id` (`address_id`),
   KEY `idx_last_name` (`last_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=600 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=653 ;
 
 --
 -- Dumping data for table `customer`
 --
 
 INSERT INTO `customer` (`customer_id`, `store_id`, `first_name`, `last_name`, `email`, `address_id`, `active`, `create_date`, `last_update`) VALUES
-(1, 1, 'MARY', 'SMITH', 'MARY.SMITH@sakilacustomer.org', 5, 1, '2006-02-14 22:04:36', '2006-02-15 10:57:20'),
-(2, 1, 'PATRICIA', 'JOHNSON', 'PATRICIA.JOHNSON@sakilacustomer.org', 6, 1, '2006-02-14 22:04:36', '2006-02-15 10:57:20'),
+(1, 1, 'Thomasss', 'Shaw', 'tomshaw21@gmail.com', 5, 1, '2006-02-14 22:04:36', '2012-12-14 06:58:05'),
+(2, 1, 'PATRICIA', 'JOHNSONwd', 'PATRICIA.JOHNSON@sakilacustomer.org', 6, 1, '2006-02-14 22:04:36', '2012-12-13 06:45:31'),
 (3, 1, 'LINDA', 'WILLIAMS', 'LINDA.WILLIAMS@sakilacustomer.org', 7, 1, '2006-02-14 22:04:36', '2006-02-15 10:57:20'),
 (4, 2, 'BARBARA', 'JONES', 'BARBARA.JONES@sakilacustomer.org', 8, 1, '2006-02-14 22:04:36', '2006-02-15 10:57:20'),
 (5, 1, 'ELIZABETH', 'BROWN', 'ELIZABETH.BROWN@sakilacustomer.org', 9, 1, '2006-02-14 22:04:36', '2006-02-15 10:57:20'),
@@ -2468,7 +2459,7 @@ INSERT INTO `customer` (`customer_id`, `store_id`, `first_name`, `last_name`, `e
 (596, 1, 'ENRIQUE', 'FORSYTHE', 'ENRIQUE.FORSYTHE@sakilacustomer.org', 602, 1, '2006-02-14 22:04:37', '2006-02-15 10:57:20'),
 (597, 1, 'FREDDIE', 'DUGGAN', 'FREDDIE.DUGGAN@sakilacustomer.org', 603, 1, '2006-02-14 22:04:37', '2006-02-15 10:57:20'),
 (598, 1, 'WADE', 'DELVALLE', 'WADE.DELVALLE@sakilacustomer.org', 604, 1, '2006-02-14 22:04:37', '2006-02-15 10:57:20'),
-(599, 2, 'AUSTIN', 'CINTRON', 'AUSTIN.CINTRON@sakilacustomer.org', 605, 1, '2006-02-14 22:04:37', '2006-02-15 10:57:20');
+(599, 2, 'AUSTIN', 'CINTRON', 'AUSTIN.CINTRON@sakilacustomer.org', 605, 1, '2006-02-14 22:04:37', '2012-12-14 21:11:54');
 
 --
 -- Triggers `customer`
@@ -48047,6 +48038,7 @@ CREATE TABLE IF NOT EXISTS `staff_list` (
 
 CREATE TABLE IF NOT EXISTS `store` (
   `store_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `store_name` varchar(256) DEFAULT NULL,
   `manager_staff_id` tinyint(3) unsigned NOT NULL,
   `address_id` smallint(5) unsigned NOT NULL,
   `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -48059,9 +48051,9 @@ CREATE TABLE IF NOT EXISTS `store` (
 -- Dumping data for table `store`
 --
 
-INSERT INTO `store` (`store_id`, `manager_staff_id`, `address_id`, `last_update`) VALUES
-(1, 1, 1, '2006-02-15 10:57:12'),
-(2, 2, 2, '2006-02-15 10:57:12');
+INSERT INTO `store` (`store_id`, `store_name`, `manager_staff_id`, `address_id`, `last_update`) VALUES
+(1, 'Blockbuster Films', 1, 1, '2012-12-14 07:40:55'),
+(2, 'Hollywood Rentals', 2, 2, '2012-12-14 07:40:39');
 
 -- --------------------------------------------------------
 

@@ -1,15 +1,60 @@
+Backbone.emulateHTTP = false;
+Backbone.emulateJSON = false;
+
+Backbone.View.prototype.eventAggregator = _.extend({}, Backbone.Events);
+
+window.Customer = Backbone.Model.extend({
+    urlRoot: "index/edit/customer_id",
+    idAttribute: "customer_id",
+    defaults: {
+        customer_id: "",
+        store_id: 1,
+        first_name: "",
+        last_name: "",
+        email: "",
+        address_id: 5,
+        active: 1,
+        create_date: "",
+        last_update: ""
+    }
+});
+
+window.CustomerAdd = Backbone.Model.extend({
+    urlRoot: "index/add",
+    defaults: {
+        store_id: 1,
+        first_name: "",
+        last_name: "",
+        email: "",
+        address_id: 5,
+        active: 1,
+        create_date: "",
+        last_update: ""
+    }
+});
+
 window.CustomerList = Backbone.Model.extend({
-    urlRoot: "index/customers",
+    urlRoot: "index/list",
+    idAttribute: "customer_id",
     defaults: {
         items: {
             active: "",
+            address: "",
+            address2: "",
             address_id: "",
+            city: "",
+            city_id: "",
+            country: "",
+            country_id: "",
             create_date: "",
             customer_id: "",
+            district: "",
             email: "",
             first_name: "",
             last_name: "",
             last_update: "",
+            phone: "",
+            postal_code: "",
             store_id: ""
         },
         pages: {
@@ -34,46 +79,11 @@ window.CustomerListCollection = Backbone.Collection.extend({
 
     model: CustomerList,
 
-    url: "index/customers",
+    url: "index/list",
 
     parse: function (response) {
         this.pages = response.pages;
-        return response.items
-    }
-});
-
-window.CustomerListView = Backbone.View.extend({
-
-    template: _.template($('#CustomerListView').html()),
-
-    initialize: function () {
-        this.model.bind("reset", this.render, this);
-        this.model.bind("change", this.render, this);
-    },
-
-    render: function (event) {
-        $(this.el).html(this.template({
-            customers: this.model.toJSON()
-        }));
-        $(this.el).prepend(new PaginatorTemplate({
-            model: this.model
-        }).render().el);
-        return this;
-    }
-
-});
-
-window.PaginatorTemplate = Backbone.View.extend({
-
-    initialize: function () {
-        this.template = _.template($("#PaginatorTemplate").html());
-    },
-
-    render: function (event) {
-        $(this.el).html(this.template({
-            data: this.model.pages
-        }));
-        return this;
+        return response.items;
     }
 });
 
@@ -81,13 +91,9 @@ window.HeaderView = Backbone.View.extend({
 
     template: "#HeaderView",
 
-    initialize: function () {
-        this.initializeTemplate();
-        this.render();
-    },
-
-    initializeTemplate: function () {
+    initialize: function (options) {
         this.template = _.template($(this.template).html());
+        this.render();
     },
 
     render: function () {
@@ -103,10 +109,174 @@ window.HeaderView = Backbone.View.extend({
     }
 });
 
+window.CustomerListView = Backbone.View.extend({
+
+    template: _.template($('#CustomerListView').html()),
+
+    initialize: function (options) {
+        this.model.bind("reset", this.render, this);
+        this.model.bind("change", this.render, this);
+    },
+
+    events: {
+        "click tr": "rowClick"
+    },
+
+    render: function (event) {
+        $(this.el).html(this.template({
+            customers: this.model
+        }));
+        $(this.el).prepend(new PaginatorTemplate({
+            model: this.model
+        }).render().el);
+        return this;
+    },
+
+    rowClick: function (event) {
+        var href = $(event.target).closest('tr').attr('data-href');
+        app.navigate(href, true);
+    }
+
+});
+
+window.PaginatorTemplate = Backbone.View.extend({
+
+    initialize: function (options) {
+        this.template = _.template($("#PaginatorTemplate").html());
+    },
+
+    render: function (event) {
+        $(this.el).html(this.template({
+            data: this.model.pages
+        }));
+        return this;
+    }
+});
+
+window.CustomerModalView = Backbone.View.extend({
+
+    events: {
+        "click #submit": "clickHandler"
+    },
+
+    clickHandler: function (event) {
+        $("#customer-form-modal").modal('hide');
+        this.eventAggregator.trigger('beforeSave');
+    },
+
+    initialize: function (options) {
+        this.template = _.template($("#CustomerModalView").html());
+        this.render();
+    },
+
+    render: function (event) {
+        $(this.el).html(this.template());
+        return this;
+    }
+
+});
+
+window.CustomerAddView = Backbone.View.extend({
+
+    initialize: function (options) {
+        this.template = _.template($("#CustomerAddView").html());
+        this.render();
+    },
+
+    events: {
+        "change": "change",
+        "click #submit": "save"
+    },
+
+    change: function (event) {
+        var target = event.target;
+        var change = {};
+        change[target.name] = target.value;
+        this.model.set(change);
+    },
+
+    render: function (event) {
+        $(this.el).html(this.template(_.extend(this.model.toJSON())));
+        return this;
+    },
+
+    save: function () {
+        $("#customer-form-modal").modal('hide');
+        this.model.save(null, {
+            success: function (response) {
+                app.navigate('/', true);
+                utils.showAlert('Success!', 'Customer saved successfully!', 'alert-success');
+            },
+            error: function () {
+                utils.showAlert('Error', 'An error occurred saving this customer.', 'alert-error');
+            }
+        });
+    }
+});
+
+window.CustomerEditView = Backbone.View.extend({
+
+    initialize: function (options) {
+        this.template = _.template($("#CustomerEditView").html());
+        this.render();
+        this.eventAggregator.bind('beforeSave', this.beforeSave, this);
+    },
+
+    events: {
+        "change": "change"
+    },
+
+    change: function (event) {
+        utils.hideAlert();
+        var target = event.target;
+        var change = {};
+        change[target.name] = target.value;
+        this.model.set(change);
+    },
+
+    render: function (event) {
+        $(this.el).html(this.template(_.extend(this.model.toJSON())));
+        return this;
+    },
+
+    beforeSave: function () {
+        this.saveCustomer();
+        return false;
+    },
+
+    saveCustomer: function () {
+        this.model.save(null, {
+            success: function (response) {
+                app.navigate('/', true);
+                utils.showAlert('Success!', 'Customer saved successfully!', 'alert-success');
+            },
+            error: function () {
+                utils.showAlert('Error', 'An error occurred saving this customer.', 'alert-error');
+            }
+        });
+    }
+});
+
+window.CustomerReviewView = Backbone.View.extend({
+
+    initialize: function (options) {
+        this.template = _.template($("#CustomerReviewView").html());
+        this.render();
+    },
+
+    render: function (event) {
+        $(this.el).html(this.template(this.model.toJSON()));
+        return this;
+    }
+});
+
 var AppRouter = Backbone.Router.extend({
     routes: {
-        ""                              : "home",
-        "index/page/:page"              : "pages"
+        "": "home",
+        "index/page/:page": "pages",
+        "index/add": "addCustomer",
+        "index/edit/customer_id/:id": "editCustomer",
+        "index/view/customer_id/:id": "viewCustomer"
     },
 
     initialize: function () {
@@ -128,7 +298,6 @@ var AppRouter = Backbone.Router.extend({
 
     pages: function (page) {
         var page = page ? parseInt(page, 10) : 1;
-        console.log('current page: ', page);
         var customerListCollection = new CustomerListCollection();
         customerListCollection.fetch({
             data: {
@@ -141,7 +310,64 @@ var AppRouter = Backbone.Router.extend({
             }
         });
         this.headerView.menuItem('home-menu');
+    },
+
+    addCustomer: function () {
+        var customer = new CustomerAdd();
+        $('#content').html(new CustomerAddView({
+            model: customer
+        }).render().el);
+        $("#customer-form-modal").modal({
+            show: true,
+            backdrop: true,
+            keyboard: true
+        });
+        $("#customer-form-modal").show();
+        $("#modal-header").html("Add Customer");
+        this.headerView.menuItem('add-menu');
+    },
+
+    editCustomer: function (customer_id) {
+        var customer = new Customer({
+            customer_id: customer_id
+        });
+        customer.fetch({
+            success: function () {
+                $(document.body).append(new CustomerModalView().el);
+                $('#customer-modal-body').html(new CustomerEditView({
+                    model: customer
+                }).render().el);
+                $("#customer-form-modal").modal({
+                    show: true,
+                    backdrop: true,
+                    keyboard: true
+                });
+                $("#customer-form-modal").show();
+                $("#modal-header").html("Edit Customer");
+                try {
+                    $('#create_date').datepicker({dateFormat: 'yy-mm-dd'});
+                } catch (error) {
+                    if (console) console.log('datepicker error: ' + error.message);
+                }
+            }
+        });
+        this.headerView.menuItem('home-menu');
+    },
+
+    viewCustomer: function (id) {
+        var customer = new Customer({
+            id: id
+        });
+        customer.fetch({
+            success: function () {
+                $("#content").html(new CustomerReviewView({
+                    model: customer
+                }).el);
+            }
+        });
+        this.headerView.menuItem('home-menu');
     }
+
 });
 
 var app = new AppRouter();

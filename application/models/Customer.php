@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class Model_Customer extends Zend_Db_Table_Abstract
 {
@@ -21,9 +21,24 @@ class Model_Customer extends Zend_Db_Table_Abstract
     
     public function getCustomers()
     {
+        $select = $this->select()
+            ->setIntegrityCheck(false)
+            ->from(array('customer' => $this->getTableName()), array('*'))
+            ->joinLeft(array('address' => 'address'), 'customer.address_id = address.address_id', array('*'))
+            ->joinLeft(array('city' => 'city'), 'address.city_id = city.city_id', array('*'))
+            ->joinLeft(array('country' => 'country'), 'city.country_id = country.country_id', array('*'))
+            ->order('customer_id DESC');
+        return $select;
+    }
+    
+    public function fetchStores()
+    {
     	$select = $this->select()
-    		->from($this->getTableName(), array('*'));
-    	return $select;
+    		->setIntegrityCheck(false)
+    		->distinct(true)
+    		->from('store', array('store_id','store_name'))
+    		->order('store_id ASC');
+    	return $this->getAdapter()->fetchPairs($select);
     }
     
 }
