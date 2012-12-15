@@ -6,6 +6,66 @@ Backbone.View.prototype.eventAggregator = _.extend({}, Backbone.Events);
 window.Customer = Backbone.Model.extend({
     urlRoot: "index/edit/customer_id",
     idAttribute: "customer_id",
+
+    initialize: function () {
+        this.validators = {};
+
+        this.validators.first_name = function (value) {
+            return value.length > 0 ? {
+                isValid: true
+            } : {
+                isValid: false,
+                message: "You must enter a first name."
+            };
+        };
+
+        this.validators.last_name = function (value) {
+            return value.length > 0 ? {
+                isValid: true
+            } : {
+                isValid: false,
+                message: "You must enter a last name."
+            };
+        };
+
+        this.validators.email = function (value) {
+            var regexp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+            return (regexp.test(value) === true) ? {
+                isValid: true
+            } : {
+                isValid: false,
+                message: "You must enter a valid email address."
+            };
+        };
+    },
+
+    validateItem: function (key) {
+        return (this.validators[key]) ? this.validators[key](this.get(key)) : {
+            isValid: true
+        };
+    },
+
+    validateAll: function () {
+
+        var messages = {};
+
+        for (var key in this.validators) {
+            if (this.validators.hasOwnProperty(key)) {
+                var check = this.validators[key](this.get(key));
+                if (check.isValid === false) {
+                    messages[key] = check.message;
+                }
+            }
+        }
+
+        return _.size(messages) > 0 ? {
+            isValid: false,
+            messages: messages
+        } : {
+            isValid: true
+        };
+    },
+
     defaults: {
         customer_id: "",
         store_id: 1,
@@ -19,7 +79,7 @@ window.Customer = Backbone.Model.extend({
     }
 });
 
-window.CustomerAdd = Backbone.Model.extend({
+window.CustomerAdd = Customer.extend({
     urlRoot: "index/add",
     defaults: {
         store_id: 1,
@@ -159,13 +219,13 @@ window.CustomerListView = Backbone.View.extend({
     },
 
     tableRowClick: function (event) {
-    	utils.hideAlert();
+        utils.hideAlert();
         var href = $(event.target).closest('tr').attr('data-href');
         app.navigate(href, true);
     },
 
     tableRowDeleteButton: function (event) {
-    	utils.hideAlert();
+        utils.hideAlert();
         var customerId = $(event.target).closest('tr').attr('id');
         customerDelete.set({
             customer_id: customerId
@@ -233,7 +293,7 @@ window.CustomerAddView = Backbone.View.extend({
 
     events: {
         "change": "change",
-        "click #submit": "save"
+        "click #submit": "beforeSave"
     },
 
     change: function (event) {
@@ -241,6 +301,12 @@ window.CustomerAddView = Backbone.View.extend({
         var change = {};
         change[target.name] = target.value;
         this.model.set(change);
+        var check = this.model.validateItem(target.id);
+        if (check.isValid === false) {
+            utils.addValidationError(target.id, check.message);
+        } else {
+            utils.removeValidationError(target.id);
+        }
     },
 
     render: function (event) {
@@ -248,7 +314,17 @@ window.CustomerAddView = Backbone.View.extend({
         return this;
     },
 
-    save: function () {
+    beforeSave: function () {
+        var check = this.model.validateAll();
+        if (check.isValid === false) {
+            utils.displayValidationErrors(check.messages);
+            return false;
+        }
+        this.addCustomer();
+        return false;
+    },
+
+    addCustomer: function () {
         $("#customer-form-modal").modal('hide');
         var page = 1;
         this.model.save(null, {
@@ -292,6 +368,12 @@ window.CustomerEditView = Backbone.View.extend({
         var change = {};
         change[target.name] = target.value;
         this.model.set(change);
+        var check = this.model.validateItem(target.id);
+        if (check.isValid === false) {
+            utils.addValidationError(target.id, check.message);
+        } else {
+            utils.removeValidationError(target.id);
+        }
     },
 
     render: function (event) {
@@ -300,16 +382,21 @@ window.CustomerEditView = Backbone.View.extend({
     },
 
     beforeSave: function () {
-        this.saveCustomer();
+        var check = this.model.validateAll();
+        if (check.isValid === false) {
+            utils.displayValidationErrors(check.messages);
+            return false;
+        }
+        this.updateCustomer();
         return false;
     },
 
-    saveCustomer: function () {
+    updateCustomer: function () {
         var page = this.getPage();
         this.model.save(null, {
             success: function (response) {
                 app.navigate('#index/page/' + page, true);
-                utils.showAlert('Success!', 'Customer updated successfully!', 'alert-success');
+                utils.showAlert('Success!', 'Customer has been updated successfully!', 'alert-success');
             },
             error: function () {
                 utils.showAlert('Error', 'An error occurred while updating this customer.', 'alert-error');

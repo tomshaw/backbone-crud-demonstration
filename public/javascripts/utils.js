@@ -18,7 +18,7 @@ utils.addValidationError = function (field, message) {
 utils.removeValidationError = function (field) {
     var controlGroup = $('#' + field).parent().parent().parent();
     controlGroup.removeClass('error');
-    $('.help-inline', controlGroup).html('');
+    $('.help-block', controlGroup).html('Completed successfully.');
 };
 
 utils.showAlert = function (title, text, klass) {

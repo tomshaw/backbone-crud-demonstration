@@ -52,8 +52,6 @@ class IndexController extends Zend_Controller_Action
         	
             $post = Zend_Json::decode($request->getRawBody());
             
-            $post['address_id'] = 5; // foreign key restraint
-            
             $lastInsertId = $model->insert($post);
             
             $post['customer_id'] = $lastInsertId;
