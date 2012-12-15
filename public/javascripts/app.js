@@ -159,24 +159,25 @@ window.CustomerListView = Backbone.View.extend({
     },
 
     tableRowClick: function (event) {
+    	utils.hideAlert();
         var href = $(event.target).closest('tr').attr('data-href');
         app.navigate(href, true);
     },
 
     tableRowDeleteButton: function (event) {
-        console.log('here deleting');
+    	utils.hideAlert();
         var customerId = $(event.target).closest('tr').attr('id');
         customerDelete.set({
             customer_id: customerId
         });
-        console.log(customerDelete.get("customer_id"));
+        //customerDelete.get("customer_id");
         customerDelete.destroy({
             success: function (response) {
-                //app.navigate("/", true);
-                window.history.back();
+                app.navigate("/", true);
+                //window.history.back();
             }
         });
-        //return false;
+        return false;
     },
 
     tableRowViewButton: function (event) {
@@ -388,6 +389,7 @@ var AppRouter = Backbone.Router.extend({
         });
         $("#customer-form-modal").show();
         $("#modal-header").html("Add Customer");
+        utils.hideAlert();
         this.headerView.menuItem('add-menu');
     },
 
