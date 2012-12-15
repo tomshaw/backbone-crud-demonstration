@@ -33,6 +33,12 @@ window.CustomerAdd = Backbone.Model.extend({
     }
 });
 
+window.CustomerDelete = Customer.extend({
+    urlRoot: "index/delete/customer_id"
+});
+
+var customerDelete = new CustomerDelete();
+
 window.CustomerList = Backbone.Model.extend({
     urlRoot: "index/list",
     idAttribute: "customer_id",
@@ -158,13 +164,24 @@ window.CustomerListView = Backbone.View.extend({
     },
 
     tableRowDeleteButton: function (event) {
-        var href = $(event.target).closest('tr').attr('id');
-        //app.navigate(href, true);
+        console.log('here deleting');
+        var customerId = $(event.target).closest('tr').attr('id');
+        customerDelete.set({
+            customer_id: customerId
+        });
+        console.log(customerDelete.get("customer_id"));
+        customerDelete.destroy({
+            success: function (response) {
+                //app.navigate("/", true);
+                window.history.back();
+            }
+        });
+        //return false;
     },
 
     tableRowViewButton: function (event) {
-        var href = $(event.target).closest('tr').attr('id');
-        //app.navigate(href, true);
+        var customerId = $(event.target).closest('tr').attr('id');
+        app.navigate("#index/view/customer_id/" + customerId, true);
     }
 
 });
@@ -404,9 +421,9 @@ var AppRouter = Backbone.Router.extend({
         this.headerView.menuItem('home-menu');
     },
 
-    viewCustomer: function (id) {
+    viewCustomer: function (customer_id) {
         var customer = new Customer({
-            id: id
+            customer_id: customer_id
         });
         customer.fetch({
             success: function () {

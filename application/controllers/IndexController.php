@@ -15,7 +15,9 @@ class IndexController extends Zend_Controller_Action
         $this->_page = $request->getParam('page', '1');
     }
     
-    public function indexAction() { }
+    public function indexAction()
+    {
+    }
     
     public function listAction()
     {
@@ -49,8 +51,6 @@ class IndexController extends Zend_Controller_Action
         if ($request->isPost()) {
         	
             $post = Zend_Json::decode($request->getRawBody());
-            
-            $post['store_id'] = 1;
             
             $post['address_id'] = 5; // foreign key restraint
             
@@ -93,24 +93,52 @@ class IndexController extends Zend_Controller_Action
             $this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode($data));
             
             return;
-        } 
-        	
+        }
+        
         $this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode($row->toArray()));
+    }
+    
+    public function deleteAction()
+    {
+        $this->norender();
+        
+        $delete = $this->getRequest();
+        
+        $customerId = intval($delete->getParam('customer_id'));
+        
+        if ($customerId) {
+        	
+            $model = new Model_Customer();
+            
+            try {
+                $model->delete('customer_id = ' . $customerId);
+            }
+            catch (Exception $e) {
+                $this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode(array(
+                    'message' => $e->getMessage()
+                )));
+                return;
+            }
+        }
+        
+        $this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode(array(
+            'customer_id' => $customerId
+        )));
     }
     
     private function loadStores()
     {
-    	$cache = Zend_Registry::get('cache');
-    
-    	if (!($stores = $cache->load('stores'))) {
-    		$model = new Model_Customer();
-    		$stores = $model->fetchStores();
-    		$cache->save($stores, 'stores');
-    	}
-    
-    	$this->view->headScript()->appendScript('var stores = ' . str_replace('\\/', '/', Zend_Json::encode($stores)));
-    
-    	return $this;
+        $cache = Zend_Registry::get('cache');
+        
+        if (!($stores = $cache->load('stores'))) {
+            $model  = new Model_Customer();
+            $stores = $model->fetchStores();
+            $cache->save($stores, 'stores');
+        }
+        
+        $this->view->headScript()->appendScript('var stores = ' . str_replace('\\/', '/', Zend_Json::encode($stores)));
+        
+        return $this;
     }
     
     private function addScript($javascriptFile)
