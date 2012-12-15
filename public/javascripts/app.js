@@ -85,13 +85,13 @@ window.CustomerListCollection = Backbone.Collection.extend({
         this.pages = response.pages;
         return response.items;
     },
-    
-    getPages: function() {
-    	return this.pages;
+
+    getPages: function () {
+        return this.pages;
     },
-    
-    getCurrentPage: function() {
-    	return this.pages.current;
+
+    getCurrentPage: function () {
+        return this.pages.current;
     }
 });
 
@@ -127,7 +127,11 @@ window.CustomerListView = Backbone.View.extend({
     },
 
     events: {
-        "click tr": "rowClick"
+        "mouseenter tr td button": "buttonOn",
+        "mouseleave tr td button": "buttonOff",
+        "click tr": "tableRowClick",
+        "click tr td button#delete": "tableRowDeleteButton",
+        "click tr td button#view": "tableRowViewButton"
     },
 
     render: function (event) {
@@ -140,9 +144,27 @@ window.CustomerListView = Backbone.View.extend({
         return this;
     },
 
-    rowClick: function (event) {
+    buttonOn: function (event) {
+        $(this.el).undelegate('tr', 'click');
+    },
+
+    buttonOff: function (event) {
+        $(this.el).delegate('tr', 'click', this.tableRowClick);
+    },
+
+    tableRowClick: function (event) {
         var href = $(event.target).closest('tr').attr('data-href');
         app.navigate(href, true);
+    },
+
+    tableRowDeleteButton: function (event) {
+        var href = $(event.target).closest('tr').attr('id');
+        //app.navigate(href, true);
+    },
+
+    tableRowViewButton: function (event) {
+        var href = $(event.target).closest('tr').attr('id');
+        //app.navigate(href, true);
     }
 
 });
@@ -185,7 +207,7 @@ window.CustomerModalView = Backbone.View.extend({
 });
 
 window.CustomerAddView = Backbone.View.extend({
-	
+
     initialize: function (options) {
         this.template = _.template($("#CustomerAddView").html());
         this.render();
@@ -225,21 +247,21 @@ window.CustomerAddView = Backbone.View.extend({
 
 window.CustomerEditView = Backbone.View.extend({
 
-	page: 1,
-	
+    page: 1,
+
     initialize: function (options) {
         this.template = _.template($("#CustomerEditView").html());
         this.render();
         this.eventAggregator.bind('beforeSave', this.beforeSave, this);
     },
-    
+
     setPage: function (page) {
-    	this.page = page;
-    	return this;
+        this.page = page;
+        return this;
     },
-    
+
     getPage: function () {
-    	return this.page;
+        return this.page;
     },
 
     events: {
@@ -265,10 +287,10 @@ window.CustomerEditView = Backbone.View.extend({
     },
 
     saveCustomer: function () {
-    	var page = this.getPage();
+        var page = this.getPage();
         this.model.save(null, {
             success: function (response) {
-            	app.navigate('#index/page/' + page, true);
+                app.navigate('#index/page/' + page, true);
                 utils.showAlert('Success!', 'Customer updated successfully!', 'alert-success');
             },
             error: function () {
@@ -292,9 +314,9 @@ window.CustomerReviewView = Backbone.View.extend({
 });
 
 var AppRouter = Backbone.Router.extend({
-	
-	page: 1,
-	
+
+    page: 1,
+
     routes: {
         "": "home",
         "index/page/:page": "pages",
@@ -371,7 +393,9 @@ var AppRouter = Backbone.Router.extend({
                 $("#customer-form-modal").show();
                 $("#modal-header").html("Edit Customer");
                 try {
-                    $('#create_date').datepicker({dateFormat: 'yy-mm-dd'});
+                    $('#create_date').datepicker({
+                        dateFormat: 'yy-mm-dd'
+                    });
                 } catch (error) {
                     if (console) console.log('datepicker error: ' + error.message);
                 }

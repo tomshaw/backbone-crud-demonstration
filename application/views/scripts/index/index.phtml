@@ -21,28 +21,36 @@
 </div>
 </script>
 
+<style>
+.nudge { margin-top:-0.6px; }
+</style>
+
 <script id="CustomerListView" type="text/html">
 <table class="table table-hover table-striped table-bordered table-condensed">
   <thead>
     <tr>
       <th>Customer Name</th>
+      <th>Email Address</th>
       <th>Address</th>
       <th>City</th>
       <th>Country</th>
       <th>Created</th>
-      <th>Updated</th>
+      <th>Actions</a>
     </tr>
   </thead>
   <tbody>
     <% customers.each(function(customer) { %>
-    <tr data-href="#index/edit/customer_id/<%= _.escape(customer.get('customer_id') || '') %>">
-      <td>&nbsp;<%= _.escape(customer.get('first_name') || '') %> <%= _.escape(customer.get('last_name') || '') %><br />
-        <a href="mailto:<%= _.escape(customer.get('email') || '') %>" title="Email: <%= _.escape(customer.get('first_name') || '') %> <%= _.escape(customer.get('last_name') || '') %> - <%= _.escape(customer.get('email') || '') %>">[ <%= _.escape(customer.get('email') || '') %> ]</a></td>
+    <tr id="<%= _.escape(customer.get('customer_id') || '') %>" data-href="#index/edit/customer_id/<%= _.escape(customer.get('customer_id') || '') %>" title="#index/edit/customer_id/<%= _.escape(customer.get('customer_id') || '') %>">
+      <td>&nbsp;<%= _.escape(customer.get('first_name') || '') %> <%= _.escape(customer.get('last_name') || '') %></td>
+      <td><a href="mailto:<%= _.escape(customer.get('email') || '') %>" title="Email: <%= _.escape(customer.get('first_name') || '') %> <%= _.escape(customer.get('last_name') || '') %> - <%= _.escape(customer.get('email') || '') %>">[ <%= _.escape(customer.get('email') || '') %> ]</a></td>
       <td><%= _.escape(customer.get('address') || '') %> <%= _.escape(customer.get('address2') || '') %></td>
       <td><%= _.escape(customer.get('city') || '') %></td>
       <td><%= _.escape(customer.get('country') || '') %></td>
       <td><%= _.escape(customer.get('create_date') || '') %></td>
-      <td><%= _.escape(customer.get('last_update') || '') %></td>
+      <td style="white-space:nowrap;text-align:right;vertical-align:middle;">
+        <button class="btn btn-mini btn-primary" type="button" id="delete" title="Delete Customer"><i class="icon-camera nudge"></i></button>
+        <button class="btn btn-mini" type="button" id="view" title="View Profile"><i class="icon-ban-circle nudge"></i></button>
+      </td>
     </tr>
     <% }); %>
   </tbody>
