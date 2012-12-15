@@ -19,7 +19,7 @@ class Model_Customer extends Zend_Db_Table_Abstract
         return $this->info(self::PRIMARY);
     }
     
-    public function getCustomers()
+    public function getCustomers($order = 'customer_id', $sort = 'DESC')
     {
         $select = $this->select()
             ->setIntegrityCheck(false)
@@ -27,18 +27,18 @@ class Model_Customer extends Zend_Db_Table_Abstract
             ->joinLeft(array('address' => 'address'), 'customer.address_id = address.address_id', array('*'))
             ->joinLeft(array('city' => 'city'), 'address.city_id = city.city_id', array('*'))
             ->joinLeft(array('country' => 'country'), 'city.country_id = country.country_id', array('*'))
-            ->order('customer_id DESC');
+            ->order($order . ' ' . strtoupper($sort));
         return $select;
     }
     
     public function fetchStores()
     {
-    	$select = $this->select()
-    		->setIntegrityCheck(false)
-    		->distinct(true)
-    		->from('store', array('store_id','store_name'))
-    		->order('store_id ASC');
-    	return $this->getAdapter()->fetchPairs($select);
+        $select = $this->select()
+            ->setIntegrityCheck(false)
+            ->distinct(true)
+            ->from('store', array('store_id','store_name'))
+            ->order('store_id ASC');
+        return $this->getAdapter()->fetchPairs($select);
     }
     
 }
