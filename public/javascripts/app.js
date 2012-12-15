@@ -339,7 +339,7 @@ var AppRouter = Backbone.Router.extend({
 
     addCustomer: function () {
         var customer = new CustomerAdd();
-        $('#content').html(new CustomerAddView({
+        $('#content').append(new CustomerAddView({
             model: customer
         }).render().el);
         $("#customer-form-modal").modal({
