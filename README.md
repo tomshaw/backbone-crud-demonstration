@@ -1,12 +1,18 @@
 # BBCRUD - A Backbone.js CRUD Application
       
-  Nothing much to see here just a sample CRUD application (C)reate (R)ead (U)pdate (D)elete to learn how to use Backbone.js. I'm using Zend Framework 1.12 on the server end, development & testing is being done on a Macbook Pro running OSX Lion.
+  Nothing much to see here just a sample Backbone.js CRUD application (C)reate (R)ead (U)pdate (D)elete developed to learn how to use Backbone.js. I'm using Zend Framework 1.12 on the server end, development & testing is being done on a Macbook Pro running OSX Lion.
+  
+  Thanks to numerous Backbone.js tutorials and example projects found on the web for a majority of the code concepts found in this project.
   
 ## Technologies
 
   * Backbone.js 0.9.2
   * Underscore.js 1.4.3
   * jQuery 1.8.3
+  * jQuery UI 1.9.2
+  * Jasmine 1.3.1
+  * Zend Framework 1.12
+  * Twitter Bootstrap 2.2.2
 
 ## Installation
 
@@ -14,17 +20,17 @@
   
   * Find the database and load it.
   * Update your application.ini and fill in your MySQL connection information.
-  
-  Other documentation concerning installation and configuration won't be coming anytime soon.
+  * Setup a virtual host like you normally do for a Zend Framework project.
 
 ## Todo
 
- A lot of testing! Any input, help, pull requests or ideas from the general public would be greatly appreciated. 
+ A lot of testing! This project was created to learn Backbone.js. Any input, help, pull requests or ideas would be greatly appreciated. 
 
  List of todo items:
 
   * Jasmine testing.
-  * Add full grid with sort search capabilities.
+  * Grid column sorting & search capabilities.
+  * An AMD version? Probablly so need to learn how to do it.
 
 # Questions or Comments?
 
