@@ -4,9 +4,17 @@ class IndexController extends Zend_Controller_Action
 {
     public $_page;
     
+    public function preDispatch()
+    {
+    	// http://lvh.me/project/bbcrud/test_js/SpecRunner.html 
+        //header('Access-Control-Allow-Origin: *');
+        //header('Access-Control-Allow-Methods: "POST,GET,DELETE,PUT,OPTIONS"');
+        //header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
+    }
+    
     public function init()
     {
-        $this->addScript('app');
+        $this->addScript('models')->addScript('views')->addScript('router');
         
         $this->loadStores();
         
