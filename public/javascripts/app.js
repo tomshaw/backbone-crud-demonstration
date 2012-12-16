@@ -348,7 +348,7 @@ window.CustomerEditView = Backbone.View.extend({
     page: 1,
 
     initialize: function (options) {
-    	this.page = options.page;
+        this.page = options.page;
         this.template = _.template($("#CustomerEditView").html());
         this.render();
         this.eventAggregator.bind('beforeSave', this.beforeSave, this);
@@ -425,6 +425,7 @@ var AppRouter = Backbone.Router.extend({
     routes: {
         "": "home",
         "index/page/:page": "pages",
+        "index/page/:page/sort/:sort/dir/:dir": "sorting",
         "index/add": "addCustomer",
         "index/edit/customer_id/:id": "editCustomer",
         "index/view/customer_id/:id": "viewCustomer"
@@ -460,6 +461,31 @@ var AppRouter = Backbone.Router.extend({
                 $("#content").html(new CustomerListView({
                     model: customerListCollection,
                     page: page
+                }).render().el);
+            }
+        });
+        this.headerView.menuItem('home-menu');
+        this.page = page;
+    },
+    
+    sorting: function (page, sort, dir) {
+    	console.log('page', page);
+    	console.log('sort', sort);
+    	console.log('dir', dir);
+        var page = page ? parseInt(page, 10) : 1;
+        var customerListCollection = new CustomerListCollection();
+        customerListCollection.fetch({
+            data: {
+                page: page,
+                sort: sort,
+                dir: dir
+            },
+            success: function (resp) {
+                $("#content").html(new CustomerListView({
+                    model: customerListCollection,
+                    page: page,
+                    sort: sort,
+                    dir: dir
                 }).render().el);
             }
         });
