@@ -186,8 +186,11 @@ window.HeaderView = Backbone.View.extend({
 window.CustomerListView = Backbone.View.extend({
 
     template: _.template($('#CustomerListView').html()),
+    
+    page: 1,
 
     initialize: function (options) {
+        this.page = this.options.page;
         this.model.bind("reset", this.render, this);
         this.model.bind("change", this.render, this);
     },
@@ -202,7 +205,8 @@ window.CustomerListView = Backbone.View.extend({
 
     render: function (event) {
         $(this.el).html(this.template({
-            customers: this.model
+            customers: this.model,
+            page: this.page
         }));
         $(this.el).prepend(new PaginatorTemplate({
             model: this.model
@@ -438,9 +442,11 @@ var AppRouter = Backbone.Router.extend({
     home: function () {
         var customerListCollection = new CustomerListCollection();
         customerListCollection.fetch({
-            success: function () {
+            success: function (resp) {
+                var page = resp.pages.current;
                 $("#content").html(new CustomerListView({
-                    model: customerListCollection
+                    model: customerListCollection,
+                    page: page
                 }).render().el);
             }
         });
@@ -454,9 +460,10 @@ var AppRouter = Backbone.Router.extend({
             data: {
                 page: page
             },
-            success: function () {
+            success: function (resp) {
                 $("#content").html(new CustomerListView({
-                    model: customerListCollection
+                    model: customerListCollection,
+                    page: page
                 }).render().el);
             }
         });
