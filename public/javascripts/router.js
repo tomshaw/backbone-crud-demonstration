@@ -50,9 +50,6 @@ var AppRouter = Backbone.Router.extend({
     },
     
     sorting: function (page, order, sort) {
-    	console.log('page', page);
-    	console.log('order', order);
-    	console.log('sort', sort);
         var page = page ? parseInt(page, 10) : 1;
         var customerListCollection = new CustomerListCollection();
         customerListCollection.fetch({

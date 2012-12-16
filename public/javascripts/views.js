@@ -66,17 +66,14 @@ window.CustomerListView = Backbone.View.extend({
     },
 
     buttonOn: function (event) {
-        console.log('button on');
         $(this.el).undelegate('tr', 'click');
     },
 
     buttonOff: function (event) {
-        console.log('button off');
         $(this.el).delegate('tr', 'click', this.tableRowClick);
     },
 
     tableRowClick: function (event) {
-        console.log('row click');
         utils.hideAlert();
         var href = $(event.target).closest('tr').attr('data-href');
         if (typeof(href) !== "undefined") {
