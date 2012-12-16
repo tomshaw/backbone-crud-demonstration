@@ -30,8 +30,9 @@ window.CustomerListView = Backbone.View.extend({
     initialize: function (options) {
         this.page = this.options.page;
         this.sort = this.options.sort;
-        this.model.bind("reset", this.render, this);
-        this.model.bind("change", this.render, this);
+        //this.model.bind("reset", this.render, this);
+        //this.model.bind("change", this.change, this);
+        console.log('wtf');
     },
 
     events: {
@@ -39,7 +40,9 @@ window.CustomerListView = Backbone.View.extend({
         "mouseleave tr td button": "buttonOff",
         "click tr": "tableRowClick",
         "click tr td button#delete": "tableRowDeleteButton",
-        "click tr td button#view": "tableRowViewButton"
+        "click tr td button#view": "tableRowViewButton",
+        "click #grid-submit": "gridsubmit",
+        "click #grid-reset": "gridreset"
     },
 
     render: function (event) {
@@ -65,7 +68,9 @@ window.CustomerListView = Backbone.View.extend({
     tableRowClick: function (event) {
         utils.hideAlert();
         var href = $(event.target).closest('tr').attr('data-href');
-        app.navigate(href, true);
+        if (typeof(href) !== "undefined") {
+            app.navigate(href, true);	
+        }
     },
 
     tableRowDeleteButton: function (event) {
@@ -87,6 +92,14 @@ window.CustomerListView = Backbone.View.extend({
     tableRowViewButton: function (event) {
         var customerId = $(event.target).closest('tr').attr('id');
         app.navigate("#index/view/customer_id/" + customerId, true);
+    },
+    
+    gridsubmit: function (event) {
+        console.log('gridsubmit');
+    },
+    
+    gridreset: function (event) {
+        app.navigate("/", true);
     }
 
 });
