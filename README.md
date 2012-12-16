@@ -1,4 +1,16 @@
 # BBCRUD - A Backbone.js CRUD Application
+
+     ____                     __      __                                                 
+    /\  _`\                  /\ \    /\ \                                   __           
+    \ \ \ \ \     __      ___\ \ \/'\\ \ \____    ___     ___      __      /\_\    ____  
+     \ \  _ <'  /'__`\   /'___\ \ , < \ \ '__`\  / __`\ /' _ `\  /'__`\    \/\ \  /',__\ 
+      \ \ \ \ \/\ \ \.\_/\ \__/\ \ \\`\\ \ \ \ \/\ \ \ \/\ \/\ \/\  __/  __ \ \ \/\__, `\
+       \ \____/\ \__/.\_\ \____\\ \_\ \_\ \_,__/\ \____/\ \_\ \_\ \____\/\_\_\ \ \/\____/
+        \/___/  \/__/\/_/\/____/ \/_/\/_/\/___/  \/___/  \/_/\/_/\/____/\/_/\ \_\ \/___/ 
+                                                                           \ \____/      
+                                                                            \/___/       
+    (_'_______________________________________________________________________________'_)
+    (_.ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ._)
       
   Nothing much to see here just a sample Backbone.js CRUD application (C)reate (R)ead (U)pdate (D)elete developed to learn how to use Backbone.js. I'm using Zend Framework 1.12 on the server end, development & testing is being done on a Macbook Pro running OSX Lion.
   
