@@ -37,11 +37,25 @@ class IndexController extends Zend_Controller_Action
         
         $sort = $request->getParam('sort', 'DESC');
         
+        $store = new Zend_Session_Namespace();
+        
+        $data = ($request->isPost()) ? $request->getPost() : array();
+        
+        if (sizeof($data)) {
+        	foreach($data as $key => $var) {
+        		$store->data{$key} = $var;
+        	}
+        }
+        
+        if (false === ($request->isPost())) {
+        	if (null === $request->getParam('page') && null === $request->getParam('sort') && null === $request->getParam('alpha')) {
+        		unset($store->data);
+        	}
+        }
+        
         $model = new Model_Customer();
         
-        $data = array(); // search array when implemented
-        
-        $select = $model->getCustomers($data, $order, $sort);
+        $select = $model->getCustomers($store->data, $order, $sort);
         
         $paginator = Zend_Paginator::factory($select);
         

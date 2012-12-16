@@ -26,8 +26,31 @@ class Model_Customer extends Zend_Db_Table_Abstract
             ->from(array('customer' => $this->getTableName()), array('*'))
             ->joinLeft(array('address' => 'address'), 'customer.address_id = address.address_id', array('*'))
             ->joinLeft(array('city' => 'city'), 'address.city_id = city.city_id', array('*'))
-            ->joinLeft(array('country' => 'country'), 'city.country_id = country.country_id', array('*'))
-            ->order($order . ' ' . strtoupper($sort));
+            ->joinLeft(array('country' => 'country'), 'city.country_id = country.country_id', array('*'));
+        
+        if (isset($data['name']) && !empty($data['name'])) {
+            $select->where('LOWER(customer.first_name) LIKE ?', '%'.strtolower($data['name']).'%');
+            $select->orWhere('LOWER(customer.last_name) LIKE ?', '%'.strtolower($data['name']).'%');
+        }
+        
+        if (isset($data['email']) && !empty($data['email'])) {
+            $select->where('LOWER(customer.email) LIKE ?', '%'.strtolower($data['email']).'%');
+        }
+        
+        if (isset($data['city']) && !empty($data['city'])) {
+            $select->where('LOWER(city.city) LIKE ?', '%'.strtolower($data['city']).'%');
+        }
+        
+        if (isset($data['country']) && !empty($data['country'])) {
+            $select->where('LOWER(country.country) LIKE ?', '%'.strtolower($data['country']).'%');
+        }
+        
+        if (isset($data['create_date']) && !empty($data['create_date'])) {
+            $select->where('LOWER(customer.create_date) LIKE ?', '%'.strtolower($data['create_date']).'%');
+        }
+        
+        $select->order($order . ' ' . strtoupper($sort));
+         
         return $select;
     }
     

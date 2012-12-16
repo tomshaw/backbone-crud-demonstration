@@ -26,13 +26,20 @@ window.CustomerListView = Backbone.View.extend({
     
     page: 1,
     sort: 'asc',
+    
+    search: {
+        name: "",
+        email: "",
+        city: "",
+        country: "",
+        create_date: ""
+    },
 
     initialize: function (options) {
         this.page = this.options.page;
         this.sort = this.options.sort;
-        //this.model.bind("reset", this.render, this);
-        //this.model.bind("change", this.change, this);
-        console.log('wtf');
+        this.model.bind("reset", this.render, this);
+        this.model.bind("change", this.change, this);
     },
 
     events: {
@@ -49,7 +56,8 @@ window.CustomerListView = Backbone.View.extend({
         $(this.el).html(this.template({
             customers: this.model,
             page: this.page,
-            sort: this.sort == 'asc' ? 'desc' : 'asc'
+            sort: this.sort == 'asc' ? 'desc' : 'asc',
+            search: this.search
         }));
         $(this.el).prepend(new PaginatorTemplate({
             model: this.model
@@ -58,14 +66,17 @@ window.CustomerListView = Backbone.View.extend({
     },
 
     buttonOn: function (event) {
+        console.log('button on');
         $(this.el).undelegate('tr', 'click');
     },
 
     buttonOff: function (event) {
+        console.log('button off');
         $(this.el).delegate('tr', 'click', this.tableRowClick);
     },
 
     tableRowClick: function (event) {
+        console.log('row click');
         utils.hideAlert();
         var href = $(event.target).closest('tr').attr('data-href');
         if (typeof(href) !== "undefined") {
@@ -95,7 +106,15 @@ window.CustomerListView = Backbone.View.extend({
     },
     
     gridsubmit: function (event) {
-        console.log('gridsubmit');
+        this.search.name = this.$("input[id='data[name]']").val();
+        this.search.email = this.$("input[id='data[email]']").val();
+        this.search.city = this.$("input[id='data[city]']").val();
+        this.search.country = this.$("input[id='data[country]']").val();
+        this.search.create_date = $("input[id='data[create_date]']", this.el).val();
+        this.model.fetch({
+            data: this.search,
+            type: 'POST'
+        });
     },
     
     gridreset: function (event) {

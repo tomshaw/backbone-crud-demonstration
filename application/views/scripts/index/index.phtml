@@ -53,11 +53,11 @@ tr th a:hover {
   </thead>
   <tbody>
     <tr>
-      <td><input type="text" class="input-small gridinput" name="name" value=""></td>
-      <td><input type="text" class="input-small gridinput" name="email" value=""></td>
-      <td><input type="text" class="input-small gridinput" name="city" value=""></td>
-      <td><input type="text" class="input-small gridinput" name="country" value=""></td>
-      <td><input type="text" class="input-small gridinput" name="create_date" value=""></td>
+      <td><input type="text" class="input-small gridinput" name="name" id="data[name]" value="<%= _.escape(search.name || '') %>"></td>
+      <td><input type="text" class="input-small gridinput" name="email" id="data[email]" value="<%= _.escape(search.email || '') %>"></td>
+      <td><input type="text" class="input-small gridinput" name="city" id="data[city]" value="<%= _.escape(search.city || '') %>"></td>
+      <td><input type="text" class="input-small gridinput" name="country" id="data[country]" value="<%= _.escape(search.country || '') %>"></td>
+      <td><input type="text" class="input-small gridinput" name="create_date" id="data[create_date]" value="<%= _.escape(search.create_date || '') %>"></td>
       <td>
         <div class="btn-group">
           <button id="grid-submit" data-loading-text="loading..." class="btn btn-mini" title="Submit Search"><i class="icon-refresh" style="margin-top:-1px;"></i> Filter</button>
