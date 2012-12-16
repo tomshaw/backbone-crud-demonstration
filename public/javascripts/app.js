@@ -348,14 +348,10 @@ window.CustomerEditView = Backbone.View.extend({
     page: 1,
 
     initialize: function (options) {
+    	this.page = options.page;
         this.template = _.template($("#CustomerEditView").html());
         this.render();
         this.eventAggregator.bind('beforeSave', this.beforeSave, this);
-    },
-
-    setPage: function (page) {
-        this.page = page;
-        return this;
     },
 
     getPage: function () {
@@ -496,8 +492,9 @@ var AppRouter = Backbone.Router.extend({
             success: function () {
                 $(document.body).append(new CustomerModalView().el);
                 $('#customer-modal-body').html(new CustomerEditView({
-                    model: customer
-                }).setPage(currentPage).render().el);
+                    model: customer,
+                    page: currentPage
+                }).render().el);
                 $("#customer-form-modal").modal({
                     show: true,
                     backdrop: true,
