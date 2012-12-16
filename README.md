@@ -28,7 +28,7 @@
 
  List of todo items:
 
-  * An AMD version? Probablly so need to learn how to do it.
+  * An AMD version? Probably so need to learn how to do it.
 
 # Questions or Comments?
 
