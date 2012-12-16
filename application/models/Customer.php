@@ -19,7 +19,7 @@ class Model_Customer extends Zend_Db_Table_Abstract
         return $this->info(self::PRIMARY);
     }
     
-    public function getCustomers($order = 'customer_id', $sort = 'DESC')
+    public function getCustomers($data = array(), $order = 'customer_id', $sort = 'DESC')
     {
         $select = $this->select()
             ->setIntegrityCheck(false)

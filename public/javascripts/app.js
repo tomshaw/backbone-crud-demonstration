@@ -188,9 +188,11 @@ window.CustomerListView = Backbone.View.extend({
     template: _.template($('#CustomerListView').html()),
     
     page: 1,
+    sort: 'asc',
 
     initialize: function (options) {
         this.page = this.options.page;
+        this.sort = this.options.sort;
         this.model.bind("reset", this.render, this);
         this.model.bind("change", this.render, this);
     },
@@ -206,7 +208,8 @@ window.CustomerListView = Backbone.View.extend({
     render: function (event) {
         $(this.el).html(this.template({
             customers: this.model,
-            page: this.page
+            page: this.page,
+            sort: this.sort == 'asc' ? 'desc' : 'asc'
         }));
         $(this.el).prepend(new PaginatorTemplate({
             model: this.model
@@ -425,7 +428,7 @@ var AppRouter = Backbone.Router.extend({
     routes: {
         "": "home",
         "index/page/:page": "pages",
-        "index/page/:page/sort/:sort/dir/:dir": "sorting",
+        "index/page/:page/order/:order/sort/:sort": "sorting",
         "index/add": "addCustomer",
         "index/edit/customer_id/:id": "editCustomer",
         "index/view/customer_id/:id": "viewCustomer"
@@ -468,24 +471,24 @@ var AppRouter = Backbone.Router.extend({
         this.page = page;
     },
     
-    sorting: function (page, sort, dir) {
+    sorting: function (page, order, sort) {
     	console.log('page', page);
+    	console.log('order', order);
     	console.log('sort', sort);
-    	console.log('dir', dir);
         var page = page ? parseInt(page, 10) : 1;
         var customerListCollection = new CustomerListCollection();
         customerListCollection.fetch({
             data: {
                 page: page,
-                sort: sort,
-                dir: dir
+                order: order,
+                sort: sort
             },
             success: function (resp) {
                 $("#content").html(new CustomerListView({
                     model: customerListCollection,
                     page: page,
-                    sort: sort,
-                    dir: dir
+                    order: order,
+                    sort: sort
                 }).render().el);
             }
         });

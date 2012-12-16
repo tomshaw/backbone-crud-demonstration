@@ -22,10 +22,18 @@ class IndexController extends Zend_Controller_Action
     public function listAction()
     {
         $this->norender();
+    	
+        $request = $this->getRequest();
+        
+        $order = $request->getParam('order', 'customer_id');
+        
+        $sort = $request->getParam('sort', 'DESC');
         
         $model = new Model_Customer();
         
-        $select = $model->getCustomers();
+        $data = array(); // search array when implemented
+        
+        $select = $model->getCustomers($data, $order, $sort);
         
         $paginator = Zend_Paginator::factory($select);
         
