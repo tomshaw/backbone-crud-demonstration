@@ -42,15 +42,15 @@ class IndexController extends Zend_Controller_Action
         $data = ($request->isPost()) ? $request->getPost() : array();
         
         if (sizeof($data)) {
-        	foreach($data as $key => $var) {
-        		$store->data{$key} = $var;
-        	}
+            foreach($data as $key => $var) {
+                $store->data{$key} = $var;
+            }
         }
         
         if (false === ($request->isPost())) {
-        	if (null === $request->getParam('page') && null === $request->getParam('sort') && null === $request->getParam('alpha')) {
-        		unset($store->data);
-        	}
+            if (null === $request->getParam('page') && null === $request->getParam('sort') && null === $request->getParam('alpha')) {
+                unset($store->data);
+            }
         }
         
         $model = new Model_Customer();
