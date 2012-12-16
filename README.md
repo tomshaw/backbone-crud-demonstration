@@ -28,8 +28,6 @@
 
  List of todo items:
 
-  * Jasmine testing.
-  * Grid column sorting & search capabilities.
   * An AMD version? Probablly so need to learn how to do it.
 
 # Questions or Comments?
