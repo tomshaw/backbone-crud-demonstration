@@ -18,7 +18,7 @@
   
 ## Technologies
 
-  * Backbone.js 0.9.2
+  * Backbone.js 0.9.9
   * Underscore.js 1.4.3
   * jQuery 1.8.3
   * jQuery UI 1.9.2
