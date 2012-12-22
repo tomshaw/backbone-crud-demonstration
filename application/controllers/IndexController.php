@@ -6,17 +6,13 @@ class IndexController extends Zend_Controller_Action
     
     public function preDispatch()
     {
-    	// http://lvh.me/project/bbcrud/test_js/SpecRunner.html 
-        //header('Access-Control-Allow-Origin: *');
-        //header('Access-Control-Allow-Methods: "POST,GET,DELETE,PUT,OPTIONS"');
-        //header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
     }
     
     public function init()
     {
-        $this->addScript('models')->addScript('views')->addScript('router');
+        $this->addScript('models')->addScript('collections')->addScript('views')->addScript('router');
         
-        $this->loadStores();
+        $this->loadIdentities();
         
         $request = $this->getRequest();
         
@@ -30,10 +26,10 @@ class IndexController extends Zend_Controller_Action
     public function listAction()
     {
         $this->norender();
-    	
+        
         $request = $this->getRequest();
         
-        $order = $request->getParam('order', 'customer_id');
+        $order = $request->getParam('order', 'id');
         
         $sort = $request->getParam('sort', 'DESC');
         
@@ -42,7 +38,7 @@ class IndexController extends Zend_Controller_Action
         $data = ($request->isPost()) ? $request->getPost() : array();
         
         if (sizeof($data)) {
-            foreach($data as $key => $var) {
+            foreach ($data as $key => $var) {
                 $store->data{$key} = $var;
             }
         }
@@ -53,9 +49,9 @@ class IndexController extends Zend_Controller_Action
             }
         }
         
-        $model = new Model_Customer();
+        $model = new Model_User();
         
-        $select = $model->getCustomers($store->data, $order, $sort);
+        $select = $model->getUsers($store->data, $order, $sort);
         
         $paginator = Zend_Paginator::factory($select);
         
@@ -63,9 +59,10 @@ class IndexController extends Zend_Controller_Action
         
         $paginator->setItemCountPerPage(20);
         
-        $response          = array();
-        $response['items'] = $paginator->getIterator()->toArray();
-        $response['pages'] = get_object_vars($paginator->getPages('Jumping'));
+        $response             = array();
+        $response['items']    = $paginator->getIterator()->toArray();
+        $response['pages']    = get_object_vars($paginator->getPages('Jumping'));
+        $response['profiler'] = $this->getInvokeArg('bootstrap')->profiler();
         
         $this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode($response));
     }
@@ -76,17 +73,22 @@ class IndexController extends Zend_Controller_Action
         
         $request = $this->getRequest();
         
-        $model = new Model_Customer();
+        $model = new Model_User();
         
         if ($request->isPost()) {
-        	
             $post = Zend_Json::decode($request->getRawBody());
+            
+            $post['created'] = $post['updated'] = new Zend_Db_Expr('NOW()');
+            
+            $post['password'] = md5($post['password']);
             
             $lastInsertId = $model->insert($post);
             
-            $post['customer_id'] = $lastInsertId;
+            $post['id'] = $lastInsertId;
             
-            $this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode($post));
+            $this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode(array_merge($post, array(
+                'profiler' => $this->getInvokeArg('bootstrap')->profiler()
+            ))));
             
         }
     }
@@ -97,33 +99,41 @@ class IndexController extends Zend_Controller_Action
         
         $request = $this->getRequest();
         
-        $customerId = $request->getParam('customer_id');
+        $customerId = $request->getParam('id');
         
-        $model = new Model_Customer();
+        $model = new Model_User();
         
-        $row = $model->fetchRow('customer_id = ' . $customerId);
+        $row = $model->fetchRow('id = ' . $customerId);
         
         if ($request->isPut()) {
-        	
             $put = Zend_Json::decode($request->getRawBody());
             
-            $data                = array();
-            $data['customer_id'] = $put['customer_id'];
-            $data['first_name']  = $put['first_name'];
-            $data['last_name']   = $put['last_name'];
-            $data['email']       = $put['email'];
-            $data['store_id']    = $put['store_id'];
+            $data               = array();
+            $data['id']         = $put['id'];
+            $data['username']   = $put['username'];
+            $data['first_name'] = $put['first_name'];
+            $data['last_name']  = $put['last_name'];
+            $data['email']      = $put['email'];
+            $data['identity']   = $put['identity'];
+            
+            if (isset($put['password']) && !empty($put['password'])) {
+                $data['password'] = md5($put['password']);
+            }
             
             $row->setFromArray($data);
             
             $row->save();
+            
+            $data['profiler'] = $this->getInvokeArg('bootstrap')->profiler();
             
             $this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode($data));
             
             return;
         }
         
-        $this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode($row->toArray()));
+        $this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode(array_merge($row->toArray(), array(
+            'profiler' => $this->getInvokeArg('bootstrap')->profiler()
+        ))));
     }
     
     public function deleteAction()
@@ -132,14 +142,13 @@ class IndexController extends Zend_Controller_Action
         
         $delete = $this->getRequest();
         
-        $customerId = intval($delete->getParam('customer_id'));
+        $userId = intval($delete->getParam('id'));
         
-        if ($customerId) {
-        	
-            $model = new Model_Customer();
+        if ($userId) {
+            $model = new Model_User();
             
             try {
-                $model->delete('customer_id = ' . $customerId);
+                $model->delete('id = ' . $userId);
             }
             catch (Exception $e) {
                 $this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode(array(
@@ -150,21 +159,20 @@ class IndexController extends Zend_Controller_Action
         }
         
         $this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode(array(
-            'customer_id' => $customerId
+            'id' => $userId
         )));
     }
     
-    private function loadStores()
+    private function loadIdentities()
     {
         $cache = Zend_Registry::get('cache');
         
-        if (!($stores = $cache->load('stores'))) {
-            $model  = new Model_Customer();
-            $stores = $model->fetchStores();
-            $cache->save($stores, 'stores');
+        if (!($identities = $cache->load('identities'))) {
+            $identities = Model_User::fetchIdentities();
+            $cache->save($identities, 'identities');
         }
         
-        $this->view->headScript()->appendScript('var stores = ' . str_replace('\\/', '/', Zend_Json::encode($stores)));
+        $this->view->headScript()->appendScript('var identities = ' . str_replace('\\/', '/', Zend_Json::encode($identities)));
         
         return $this;
     }

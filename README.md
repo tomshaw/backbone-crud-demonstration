@@ -16,6 +16,12 @@
   
   Thanks to numerous tutorials and example projects found on the web for a majority of the code concepts found in this project.
   
+## Features
+
+  * Custom grid that supports sorting, searching and paginating result sets.
+  * Basic demonstration of CRUD operations using Backbone.js and Zend Framework.
+  * Zend Firebug Database Profiler Asynchronous Query Logging
+  
 ## Technologies
 
   * Backbone.js 0.9.9
@@ -28,7 +34,7 @@
 
 ## Installation
 
-  Look in the docs folder for a slightly modified version of the [ MySQL Sakila ](http://dev.mysql.com/doc/sakila/en/index.html) example database. 
+  Look in the docs folder for the example user database. 
   
   * Find the database and load it.
   * Update your application.ini and fill in your MySQL connection information.

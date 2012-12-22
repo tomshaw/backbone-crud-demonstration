@@ -7,9 +7,9 @@ var AppRouter = Backbone.Router.extend({
         "": "home",
         "index/page/:page": "pages",
         "index/page/:page/order/:order/sort/:sort": "sorting",
-        "index/add": "addCustomer",
-        "index/edit/customer_id/:id": "editCustomer",
-        "index/view/customer_id/:id": "viewCustomer"
+        "index/add": "addUser",
+        "index/edit/id/:id": "editUser",
+        "index/view/id/:id": "viewUser"
     },
 
     initialize: function () {
@@ -18,12 +18,12 @@ var AppRouter = Backbone.Router.extend({
     },
 
     home: function () {
-        var customerListCollection = new CustomerListCollection();
-        customerListCollection.fetch({
+        var userListCollection = new UserListCollection();
+        userListCollection.fetch({
             success: function (resp) {
                 var page = resp.pages.current;
-                $("#content").html(new CustomerListView({
-                    model: customerListCollection,
+                $("#content").html(new UserListView({
+                    model: userListCollection,
                     page: page
                 }).render().el);
             }
@@ -33,14 +33,14 @@ var AppRouter = Backbone.Router.extend({
 
     pages: function (page) {
         var page = page ? parseInt(page, 10) : 1;
-        var customerListCollection = new CustomerListCollection();
-        customerListCollection.fetch({
+        var userListCollection = new UserListCollection();
+        userListCollection.fetch({
             data: {
                 page: page
             },
             success: function (resp) {
-                $("#content").html(new CustomerListView({
-                    model: customerListCollection,
+                $("#content").html(new UserListView({
+                    model: userListCollection,
                     page: page
                 }).render().el);
             }
@@ -51,16 +51,16 @@ var AppRouter = Backbone.Router.extend({
     
     sorting: function (page, order, sort) {
         var page = page ? parseInt(page, 10) : 1;
-        var customerListCollection = new CustomerListCollection();
-        customerListCollection.fetch({
+        var userListCollection = new UserListCollection();
+        userListCollection.fetch({
             data: {
                 page: page,
                 order: order,
                 sort: sort
             },
             success: function (resp) {
-                $("#content").html(new CustomerListView({
-                    model: customerListCollection,
+                $("#content").html(new UserListView({
+                    model: userListCollection,
                     page: page,
                     order: order,
                     sort: sort
@@ -71,41 +71,41 @@ var AppRouter = Backbone.Router.extend({
         this.page = page;
     },
 
-    addCustomer: function () {
-        var customer = new CustomerAdd();
-        $('#content').append(new CustomerAddView({
-            model: customer
+    addUser: function () {
+        var user = new UserAdd();
+        $('#content').append(new UserAddView({
+            model: user
         }).render().el);
-        $("#customer-form-modal").modal({
+        $("#user-form-modal").modal({
             show: true,
             backdrop: true,
             keyboard: true
         });
-        $("#customer-form-modal").show();
-        $("#modal-header").html("Add Customer");
+        $("#user-form-modal").show();
+        $("#modal-header").html("Add New User");
         utils.hideAlert();
         this.headerView.menuItem('add-menu');
     },
 
-    editCustomer: function (customer_id) {
-        var customer = new Customer({
-            customer_id: customer_id
+    editUser: function (id) {
+        var user = new User({
+            id: id
         });
         var currentPage = this.page;
-        customer.fetch({
-            success: function () {
-                $(document.body).append(new CustomerModalView().el);
-                $('#customer-modal-body').html(new CustomerEditView({
-                    model: customer,
+        user.fetch({
+            success: function (resp) {
+                $(document.body).append(new UserModalView().el);
+                $('#user-modal-body').html(new UserEditView({
+                    model: user,
                     page: currentPage
                 }).render().el);
-                $("#customer-form-modal").modal({
+                $("#user-form-modal").modal({
                     show: true,
                     backdrop: true,
                     keyboard: true
                 });
-                $("#customer-form-modal").show();
-                $("#modal-header").html("Edit Customer");
+                $("#user-form-modal").show();
+                $("#modal-header").html("Edit User");
                 try {
                     $('#create_date').datepicker({
                         dateFormat: 'yy-mm-dd'
@@ -118,15 +118,18 @@ var AppRouter = Backbone.Router.extend({
         this.headerView.menuItem('home-menu');
     },
 
-    viewCustomer: function (customer_id) {
-        var customer = new Customer({
-            customer_id: customer_id
+    viewUser: function (id) {
+        var user = new User({
+            id: id
         });
-        customer.fetch({
-            success: function () {
-                $("#content").html(new CustomerReviewView({
-                    model: customer
+        user.fetch({
+            success: function (resp) {
+                $("#content").html(new UserReviewView({
+                    model: user
                 }).el);
+                $("#profiler").html(new ProfilerView({
+                    profiler: resp.attributes.profiler
+                }).render().el);
             }
         });
         this.headerView.menuItem('home-menu');

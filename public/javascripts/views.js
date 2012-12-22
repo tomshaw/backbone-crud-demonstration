@@ -20,19 +20,20 @@ window.HeaderView = Backbone.View.extend({
     }
 });
 
-window.CustomerListView = Backbone.View.extend({
+window.UserListView = Backbone.View.extend({
 
-    template: _.template($('#CustomerListView').html()),
+    template: _.template($('#UserListView').html()),
     
     page: 1,
     sort: 'asc',
     
     search: {
+    	username: "",
         name: "",
         email: "",
-        city: "",
-        country: "",
-        create_date: ""
+        identity: "",
+        verified: "",
+        created: ""
     },
 
     initialize: function (options) {
@@ -54,13 +55,16 @@ window.CustomerListView = Backbone.View.extend({
 
     render: function (event) {
         $(this.el).html(this.template({
-            customers: this.model,
+            users: this.model,
             page: this.page,
             sort: this.sort == 'asc' ? 'desc' : 'asc',
             search: this.search
         }));
         $(this.el).prepend(new PaginatorTemplate({
             model: this.model
+        }).render().el);
+        $("#profiler").html(new ProfilerView({
+            profiler: this.model.profiler
         }).render().el);
         return this;
     },
@@ -83,14 +87,15 @@ window.CustomerListView = Backbone.View.extend({
 
     tableRowDeleteButton: function (event) {
         utils.hideAlert();
-        var customerId = $(event.target).closest('tr').attr('id');
-        customerDelete.set({
-            customer_id: customerId
+        var userId = $(event.target).closest('tr').attr('id');
+        userDelete.set({
+            id: userId
         });
-        //customerDelete.get("customer_id");
-        customerDelete.destroy({
+        //userDelete.get("id");
+        userDelete.destroy({
             success: function (response) {
-                app.navigate("/", true);
+                app.navigate('#index/page/1', true);
+                utils.showAlert('Success!', 'Customer deleted successfully!', 'alert-success');
                 //window.history.back();
             }
         });
@@ -98,16 +103,17 @@ window.CustomerListView = Backbone.View.extend({
     },
 
     tableRowViewButton: function (event) {
-        var customerId = $(event.target).closest('tr').attr('id');
-        app.navigate("#index/view/customer_id/" + customerId, true);
+        var userId = $(event.target).closest('tr').attr('id');
+        app.navigate("#index/view/id/" + userId, true);
     },
     
     gridsubmit: function (event) {
+    	this.search.username = this.$("input[id='data[username]']").val();
         this.search.name = this.$("input[id='data[name]']").val();
         this.search.email = this.$("input[id='data[email]']").val();
-        this.search.city = this.$("input[id='data[city]']").val();
-        this.search.country = this.$("input[id='data[country]']").val();
-        this.search.create_date = $("input[id='data[create_date]']", this.el).val();
+        this.search.identity = this.$("input[id='data[identity]']").val();
+        this.search.verified = this.$("input[id='data[verified]']").val();
+        this.search.created = $("input[id='data[created]']", this.el).val();
         this.model.fetch({
             data: this.search,
             type: 'POST'
@@ -134,19 +140,19 @@ window.PaginatorTemplate = Backbone.View.extend({
     }
 });
 
-window.CustomerModalView = Backbone.View.extend({
+window.UserModalView = Backbone.View.extend({
 
     events: {
         "click #submit": "clickHandler"
     },
 
     clickHandler: function (event) {
-        $("#customer-form-modal").modal('hide');
+        $("#user-form-modal").modal('hide');
         this.eventAggregator.trigger('beforeSave');
     },
 
     initialize: function (options) {
-        this.template = _.template($("#CustomerModalView").html());
+        this.template = _.template($("#UserModalView").html());
         this.render();
     },
 
@@ -157,10 +163,10 @@ window.CustomerModalView = Backbone.View.extend({
 
 });
 
-window.CustomerAddView = Backbone.View.extend({
+window.UserAddView = Backbone.View.extend({
 
     initialize: function (options) {
-        this.template = _.template($("#CustomerAddView").html());
+        this.template = _.template($("#UserAddView").html());
         this.render();
     },
 
@@ -193,12 +199,12 @@ window.CustomerAddView = Backbone.View.extend({
             utils.displayValidationErrors(check.messages);
             return false;
         }
-        this.addCustomer();
+        this.addUser();
         return false;
     },
 
-    addCustomer: function () {
-        $("#customer-form-modal").modal('hide');
+    addUser: function () {
+        $("#user-form-modal").modal('hide');
         var page = 1;
         this.model.save(null, {
             success: function (response) {
@@ -212,13 +218,13 @@ window.CustomerAddView = Backbone.View.extend({
     }
 });
 
-window.CustomerEditView = Backbone.View.extend({
+window.UserEditView = Backbone.View.extend({
 
     page: 1,
 
     initialize: function (options) {
         this.page = options.page;
-        this.template = _.template($("#CustomerEditView").html());
+        this.template = _.template($("#UserEditView").html());
         this.render();
         this.eventAggregator.bind('beforeSave', this.beforeSave, this);
     },
@@ -256,33 +262,46 @@ window.CustomerEditView = Backbone.View.extend({
             utils.displayValidationErrors(check.messages);
             return false;
         }
-        this.updateCustomer();
+        this.updateUser();
         return false;
     },
 
-    updateCustomer: function () {
+    updateUser: function () {
         var page = this.getPage();
         this.model.save(null, {
             success: function (response) {
                 app.navigate('#index/page/' + page, true);
-                utils.showAlert('Success!', 'Customer has been updated successfully!', 'alert-success');
+                utils.showAlert('Success!', 'System user has been updated successfully!', 'alert-success');
             },
             error: function () {
-                utils.showAlert('Error', 'An error occurred while updating this customer.', 'alert-error');
+                utils.showAlert('Error', 'An error occurred while updating this user.', 'alert-error');
             }
         });
     }
 });
 
-window.CustomerReviewView = Backbone.View.extend({
+window.UserReviewView = Backbone.View.extend({
 
     initialize: function (options) {
-        this.template = _.template($("#CustomerReviewView").html());
+        this.template = _.template($("#UserReviewView").html());
         this.render();
     },
 
     render: function (event) {
         $(this.el).html(this.template(this.model.toJSON()));
+        return this;
+    }
+});
+
+window.ProfilerView = Backbone.View.extend({
+
+    initialize: function (options) {
+    	this.profiler = this.options.profiler;
+        this.template = _.template($("#ProfilerView").html());
+    },
+
+    render: function (event) {
+        $(this.el).html(this.template({data: this.profiler}));
         return this;
     }
 });

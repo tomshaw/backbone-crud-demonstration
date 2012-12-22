@@ -3,9 +3,9 @@ Backbone.emulateJSON = false;
 
 Backbone.View.prototype.eventAggregator = _.extend({}, Backbone.Events);
 
-window.Customer = Backbone.Model.extend({
-    urlRoot: "index/edit/customer_id",
-    idAttribute: "customer_id",
+window.User = Backbone.Model.extend({
+    urlRoot: "index/edit/id",
+    idAttribute: "id",
 
     initialize: function () {
         this.validators = {};
@@ -67,61 +67,55 @@ window.Customer = Backbone.Model.extend({
     },
 
     defaults: {
-        customer_id: "",
-        store_id: 1,
+        id: "",
+        username: "",
         first_name: "",
         last_name: "",
+        password: "",
         email: "",
-        address_id: 5,
-        active: 1,
-        create_date: "",
-        last_update: ""
+        identity: 0,
+        verified: 1,
+        created: "",
+        updated: ""
     }
 });
 
-window.CustomerAdd = Customer.extend({
+window.UserAdd = User.extend({
     urlRoot: "index/add",
     defaults: {
-        store_id: 1,
+        username: "",
         first_name: "",
         last_name: "",
+        password: "",
         email: "",
-        address_id: 5,
-        active: 1,
-        create_date: "",
-        last_update: ""
+        identity: 0,
+        verified: 1,
+        created: "",
+        updated: ""
     }
 });
 
-window.CustomerDelete = Customer.extend({
-    urlRoot: "index/delete/customer_id"
+window.UserDelete = User.extend({
+    urlRoot: "index/delete/id"
 });
 
-var customerDelete = new CustomerDelete();
+var userDelete = new UserDelete();
 
-window.CustomerList = Backbone.Model.extend({
+window.UserList = Backbone.Model.extend({
     urlRoot: "index/list",
-    idAttribute: "customer_id",
+    idAttribute: "id",
     defaults: {
         items: {
-            active: "",
-            address: "",
-            address2: "",
-            address_id: "",
-            city: "",
-            city_id: "",
-            country: "",
-            country_id: "",
-            create_date: "",
-            customer_id: "",
-            district: "",
-            email: "",
+            id: "",
+            username: "",
             first_name: "",
             last_name: "",
-            last_update: "",
-            phone: "",
-            postal_code: "",
-            store_id: ""
+            password: "",
+            email: "",
+            identity: 0,
+            verified: 1,
+            created: "",
+            updated: ""
         },
         pages: {
             current: "",
@@ -138,25 +132,5 @@ window.CustomerList = Backbone.Model.extend({
             pagesInRange: {},
             totalItemCount: ""
         }
-    }
-});
-
-window.CustomerListCollection = Backbone.Collection.extend({
-
-    model: CustomerList,
-
-    url: "index/list",
-
-    parse: function (response) {
-        this.pages = response.pages;
-        return response.items;
-    },
-
-    getPages: function () {
-        return this.pages;
-    },
-
-    getCurrentPage: function () {
-        return this.pages.current;
     }
 });
