@@ -32,6 +32,10 @@ class Model_User extends Zend_Db_Table_Abstract
             ->setIntegrityCheck(false)
             ->from($this->getTableName(), array('*'));
         
+        if (isset($data['letter']) && !empty($data['letter'])) {
+            $select->where('SUBSTRING(LOWER(username), 1, 1) = ?', strval($data['letter']));
+        }
+        
         if (isset($data['username']) && !empty($data['username'])) {
             $select->where('LOWER(username) LIKE ?', '%' . strtolower($data['username']) . '%');
         }
@@ -45,11 +49,11 @@ class Model_User extends Zend_Db_Table_Abstract
             $select->where('LOWER(email) LIKE ?', '%' . strtolower($data['email']) . '%');
         }
         
-        if (isset($data['verified']) && !empty($data['verified'])) {
-            $select->where('verified= ?', intval($data['verified']));
+        if (isset($data['verified']) && $data['verified'] != '') {
+            $select->where('verified = ?', intval($data['verified']));
         }
         
-        if (isset($data['identity']) && !empty($data['identity'])) {
+        if (isset($data['identity']) && $data['identity'] != '') {
             $select->where('identity = ?', intval($data['identity']));
         }
         

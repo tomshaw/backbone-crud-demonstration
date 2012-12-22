@@ -74,7 +74,7 @@ window.User = Backbone.Model.extend({
         password: "",
         email: "",
         identity: 0,
-        verified: 1,
+        verified: 0,
         created: "",
         updated: ""
     }
@@ -89,7 +89,7 @@ window.UserAdd = User.extend({
         password: "",
         email: "",
         identity: 0,
-        verified: 1,
+        verified: 0,
         created: "",
         updated: ""
     }
@@ -113,7 +113,7 @@ window.UserList = Backbone.Model.extend({
             password: "",
             email: "",
             identity: 0,
-            verified: 1,
+            verified: 0,
             created: "",
             updated: ""
         },

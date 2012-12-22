@@ -24,6 +24,9 @@ window.UserListView = Backbone.View.extend({
 
     template: _.template($('#UserListView').html()),
     
+    characters: ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
+    letter: false,
+    
     page: 1,
     sort: 'asc',
     
@@ -39,6 +42,7 @@ window.UserListView = Backbone.View.extend({
     initialize: function (options) {
         this.page = this.options.page;
         this.sort = this.options.sort;
+        this.letter = this.options.letter;
         this.model.bind("reset", this.render, this);
         this.model.bind("change", this.change, this);
     },
@@ -58,7 +62,9 @@ window.UserListView = Backbone.View.extend({
             users: this.model,
             page: this.page,
             sort: this.sort == 'asc' ? 'desc' : 'asc',
-            search: this.search
+            search: this.search,
+            characters: this.characters,
+            letter: this.letter
         }));
         $(this.el).prepend(new PaginatorTemplate({
             model: this.model

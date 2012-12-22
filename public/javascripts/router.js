@@ -6,6 +6,7 @@ var AppRouter = Backbone.Router.extend({
     routes: {
         "": "home",
         "index/page/:page": "pages",
+        "index/letter/:letter": "letters",
         "index/page/:page/order/:order/sort/:sort": "sorting",
         "index/add": "addUser",
         "index/edit/id/:id": "editUser",
@@ -47,6 +48,23 @@ var AppRouter = Backbone.Router.extend({
         });
         this.headerView.menuItem('home-menu');
         this.page = page;
+    },
+    
+    letters: function (letter) {
+        var letter = letter ? letter : '';
+        var userListCollection = new UserListCollection();
+        userListCollection.fetch({
+            data: {
+                letter: letter
+            },
+            success: function (resp) {
+                $("#content").html(new UserListView({
+                    model: userListCollection,
+                    letter: letter
+                }).render().el);
+            }
+        });
+        this.headerView.menuItem('home-menu');
     },
     
     sorting: function (page, order, sort) {

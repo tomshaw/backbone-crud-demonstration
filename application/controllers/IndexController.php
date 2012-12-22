@@ -33,9 +33,15 @@ class IndexController extends Zend_Controller_Action
         
         $sort = $request->getParam('sort', 'DESC');
         
+        $letter = $request->getParam('letter', false);
+        
         $store = new Zend_Session_Namespace();
         
         $data = ($request->isPost()) ? $request->getPost() : array();
+        
+        if ($letter != '') {
+        	$data['letter'] = $letter;
+        }
         
         if (sizeof($data)) {
             foreach ($data as $key => $var) {
@@ -44,7 +50,7 @@ class IndexController extends Zend_Controller_Action
         }
         
         if (false === ($request->isPost())) {
-            if (null === $request->getParam('page') && null === $request->getParam('sort') && null === $request->getParam('alpha')) {
+            if (null === $request->getParam('page') && null === $request->getParam('sort') && null === $request->getParam('letter')) {
                 unset($store->data);
             }
         }

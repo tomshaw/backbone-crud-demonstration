@@ -18,8 +18,8 @@
   
 ## Features
 
-  * Custom grid that supports sorting, searching and paginating result sets.
-  * Basic demonstration of CRUD operations using Backbone.js and Zend Framework.
+  * Demonstration of CRUD operations using Backbone.js and Zend Framework.
+  * Table grid that supports sorting, searching and paginating result sets.
   * Zend Firebug Database Profiler Asynchronous Query Logging
   
 ## Technologies
