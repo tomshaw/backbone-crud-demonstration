@@ -109,18 +109,19 @@ class IndexController extends Zend_Controller_Action
         
         $model = new Model_User();
         
-        $row = $model->fetchRow('id = ' . $customerId);
+        $row = $model->fetchRow('id = ' . intval($customerId));
         
         if ($request->isPut()) {
             $put = Zend_Json::decode($request->getRawBody());
             
             $data               = array();
-            $data['id']         = $put['id'];
+            $data['id']         = intval($put['id']);
             $data['username']   = $put['username'];
             $data['first_name'] = $put['first_name'];
             $data['last_name']  = $put['last_name'];
             $data['email']      = $put['email'];
-            $data['identity']   = $put['identity'];
+            $data['identity']   = intval($put['identity']);
+            $data['verified']   = intval($put['verified']);
             
             if (isset($put['password']) && !empty($put['password'])) {
                 $data['password'] = md5($put['password']);

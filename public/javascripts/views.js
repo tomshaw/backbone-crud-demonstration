@@ -34,8 +34,8 @@ window.UserListView = Backbone.View.extend({
     	username: "",
         name: "",
         email: "",
-        identity: "",
-        verified: "",
+        identity: "-1",
+        verified: "-1",
         created: ""
     },
 
@@ -117,8 +117,8 @@ window.UserListView = Backbone.View.extend({
     	this.search.username = this.$("input[id='data[username]']").val();
         this.search.name = this.$("input[id='data[name]']").val();
         this.search.email = this.$("input[id='data[email]']").val();
-        this.search.identity = this.$("input[id='data[identity]']").val();
-        this.search.verified = this.$("input[id='data[verified]']").val();
+        this.search.identity = this.$("select[id='data[identity]']").val();
+        this.search.verified = this.$("select[id='data[verified]']").val();
         this.search.created = $("input[id='data[created]']", this.el).val();
         this.model.fetch({
             data: this.search,

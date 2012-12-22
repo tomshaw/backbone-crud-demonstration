@@ -23,7 +23,7 @@
 
 <style>
 .nudge { margin-top:-0.6px; }
-input.gridinput {
+input.gridinput, select.gridinput {
 	margin:0 5px 2px 0;
 	line-height:0;
 	width:90%;
@@ -68,8 +68,22 @@ tr th a:hover {
       <td><input type="text" class="input-small gridinput" name="username" id="data[username]" value="<%= _.escape(search.username || '') %>"></td>
       <td><input type="text" class="input-small gridinput" name="name" id="data[name]" value="<%= _.escape(search.name || '') %>"></td>
       <td><input type="text" class="input-small gridinput" name="email" id="data[email]" value="<%= _.escape(search.email || '') %>"></td>
-      <td><input type="text" class="input-small gridinput" name="identity" id="data[identity]" value="<%= _.escape(search.identity || '') %>"></td>
-      <td><input type="text" class="input-small gridinput" name="verified" id="data[verified]" value="<%= _.escape(search.verified || '') %>"></td>
+      <td>
+         <select name="identity" id="data[identity]" class="gridinput" style="width:130px;">
+           <% _.each(_.extend({'-1':'Identity'}, identities), function(val, key) { %>
+           <% var selected = (search.identity == key) ? 'selected="selected"' : ''; %>
+           <option value="<%= key %>" <%= selected %>><%= val %></option>
+           <% }); %>
+         </select>
+      </td>
+      <td>
+         <select name="verified" id="data[verified]" class="gridinput" style="width:110px;">
+           <% _.each({'-1':'Verified', '1': 'Yes', '0': 'No'}, function(val, key) { %>
+           <% var selected = (search.verified == key) ? 'selected="selected"' : ''; %>
+           <option value="<%= key %>" <%= selected %>><%= val %></option>
+           <% }); %>
+         </select>
+      </td>
       <td><input type="text" class="input-small gridinput" name="created" id="data[created]" value="<%= _.escape(search.created || '') %>"></td>
       <td>
         <div class="btn-group">
@@ -78,13 +92,14 @@ tr th a:hover {
         </div>
       </td>
     </tr>
+    <% var verifiedObject = {'1': 'Yes', '0': 'No'}; %>
     <% users.each(function(user) { %>
     <tr id="<%= _.escape(user.get('id') || '') %>" data-href="#index/edit/id/<%= _.escape(user.get('id') || '') %>" title="#index/edit/id/<%= _.escape(user.get('id') || '') %>">
       <td><%= _.escape(user.get('username') || '') %></td>
       <td><%= _.escape(user.get('first_name') || '') %> <%= _.escape(user.get('last_name') || '') %></td>
       <td><a href="mailto:<%= _.escape(user.get('email') || '') %>" title="Email: <%= _.escape(user.get('first_name') || '') %> <%= _.escape(user.get('last_name') || '') %> - <%= _.escape(user.get('email') || '') %>">[ <%= _.escape(user.get('email') || '') %> ]</a></td>
-      <td><%= _.escape(user.get('identity') || '') %></td>
-      <td><%= _.escape(user.get('verified') || '') %></td>
+      <td><%= identities[_.escape(user.get('identity') || '')] %></td>
+      <td><%= verifiedObject[_.escape(user.get('verified') || '')] %></td>
       <td><%= _.escape(user.get('created') || '') %></td>
       <td style="white-space:nowrap;text-align:right;vertical-align:middle;">
         <button class="btn btn-mini btn-primary" type="button" id="delete" title="Delete user"><i class="icon-ban-circle nudge"></i></button>
@@ -210,6 +225,17 @@ tr th a:hover {
             </select>
           </div>
         </div>
+        <div class="control-group">
+          <label class="control-label" for="verified">Choose verified:</label>
+          <div class="controls">
+            <label class="checkbox inline">
+              <input type="checkbox" id="verified" name="verified" value="0"> Yes
+            </label>
+            <label class="checkbox inline">
+              <input type="checkbox" id="verified" name="verified" value="1" checked> No
+            </label>
+          </div>
+        </div>
       </fieldset>
     </form>
   </div>
@@ -278,6 +304,17 @@ tr th a:hover {
           <option value="<%= key %>" <%= selected %>><%= val %></option>
           <% }); %>
         </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="verified">Choose verified:</label>
+      <div class="controls">
+        <label class="checkbox inline">
+          <input type="checkbox" id="verified" name="verified" value="0" <% if(verified == 1) { %><%= 'checked' %><% } %>> Yes
+        </label>
+        <label class="checkbox inline">
+          <input type="checkbox" id="verified" name="verified" value="1" <% if(verified == 0) { %><%= 'checked' %><% } %>> No
+        </label>
       </div>
     </div>
     <div class="control-group">

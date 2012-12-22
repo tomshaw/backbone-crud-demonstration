@@ -49,12 +49,12 @@ class Model_User extends Zend_Db_Table_Abstract
             $select->where('LOWER(email) LIKE ?', '%' . strtolower($data['email']) . '%');
         }
         
-        if (isset($data['verified']) && $data['verified'] != '') {
-            $select->where('verified = ?', intval($data['verified']));
+        if (isset($data['identity']) && $data['identity'] != '' && $data['identity'] != '-1') {
+        	$select->where('identity = ?', intval($data['identity']));
         }
         
-        if (isset($data['identity']) && $data['identity'] != '') {
-            $select->where('identity = ?', intval($data['identity']));
+        if (isset($data['verified']) && $data['verified'] != '' && $data['verified'] != '-1') {
+            $select->where('verified = ?', intval($data['verified']));
         }
         
         if (isset($data['created']) && !empty($data['created'])) {
