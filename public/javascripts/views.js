@@ -72,6 +72,13 @@ window.UserListView = Backbone.View.extend({
         $("#profiler").html(new ProfilerView({
             profiler: this.model.profiler
         }).render().el);
+        try {
+        	$("input[id='data[created]']", this.el).datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
+        } catch (error) {
+            if (console) console.log('datepicker error: ' + error.message);
+        }
         return this;
     },
 

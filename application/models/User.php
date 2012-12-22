@@ -58,7 +58,7 @@ class Model_User extends Zend_Db_Table_Abstract
         }
         
         if (isset($data['created']) && !empty($data['created'])) {
-            $select->where('LOWER(created) LIKE ?', '%' . strtolower($data['created']) . '%');
+            $select->where('created >= ?', date("Y-m-d", strtotime($data['created'])));
         }
         
         $select->order($order . ' ' . strtoupper($sort));

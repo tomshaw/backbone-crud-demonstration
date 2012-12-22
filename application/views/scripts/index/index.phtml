@@ -84,7 +84,7 @@ tr th a:hover {
            <% }); %>
          </select>
       </td>
-      <td><input type="text" class="input-small gridinput" name="created" id="data[created]" value="<%= _.escape(search.created || '') %>"></td>
+      <td><input type="text" class="input-small gridinput datepicker" name="created" id="data[created]" value="<%= _.escape(search.created || '') %>"></td>
       <td>
         <div class="btn-group">
           <button id="grid-submit" data-loading-text="loading..." class="btn btn-mini" title="Submit Search"><i class="icon-refresh" style="margin-top:-1px;"></i> Filter</button>
