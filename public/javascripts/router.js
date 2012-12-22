@@ -107,7 +107,7 @@ var AppRouter = Backbone.Router.extend({
                 $("#user-form-modal").show();
                 $("#modal-header").html("Edit User");
                 try {
-                    $('#create_date').datepicker({
+                    $('#created').datepicker({
                         dateFormat: 'yy-mm-dd'
                     });
                 } catch (error) {
