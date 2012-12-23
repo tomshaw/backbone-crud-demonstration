@@ -1,4 +1,3 @@
-
 var AppRouter = Backbone.Router.extend({
 
     page: 1,
@@ -49,7 +48,7 @@ var AppRouter = Backbone.Router.extend({
         this.headerView.menuItem('home-menu');
         this.page = page;
     },
-    
+
     letters: function (letter) {
         var letter = letter ? letter : '';
         var userListCollection = new UserListCollection();
@@ -66,7 +65,7 @@ var AppRouter = Backbone.Router.extend({
         });
         this.headerView.menuItem('home-menu');
     },
-    
+
     sorting: function (page, order, sort) {
         var page = page ? parseInt(page, 10) : 1;
         var userListCollection = new UserListCollection();
