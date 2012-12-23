@@ -3,38 +3,120 @@ Backbone.emulateJSON = false;
 
 Backbone.View.prototype.eventAggregator = _.extend({}, Backbone.Events);
 
+window.NameCheck = Backbone.Model.extend({
+    urlRoot: "index/username/username",
+    idAttribute: "username"
+});
+
+var nameCheck = new NameCheck();
+
+window.EmailCheck = Backbone.Model.extend({
+    urlRoot: "index/email/email",
+    idAttribute: "email"
+});
+
+var emailCheck = new EmailCheck();
+
 window.User = Backbone.Model.extend({
     urlRoot: "index/edit/id",
     idAttribute: "id",
 
     initialize: function () {
+        var self = this;
         this.validators = {};
+        this.stringRegex = /^([a-zA-Z0-9]){0,1}([a-zA-Z0-9])+$/;
+        this.emailRegex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        this.validators.username = function (value) {
+            if (value.length == 0) {
+                return {
+                    isValid: false,
+                    message: 'You must choose a username.'
+                };
+            }
+            if (!self.stringRegex.test(value)) {
+                return {
+                    isValid: false,
+                    message: 'You must enter a valid username!'
+                };
+            }
+            return {
+                isValid: true,
+                message: 'Everything looks good!'
+            };
+        };
 
         this.validators.first_name = function (value) {
-            return value.length > 0 ? {
-                isValid: true
-            } : {
-                isValid: false,
-                message: "You must enter a first name."
+            if (value.length == 0) {
+                return {
+                    isValid: false,
+                    message: 'You must enter your first name.'
+                };
+            }
+            if (!self.stringRegex.test(value)) {
+                return {
+                    isValid: false,
+                    message: 'You must enter a valid first name.'
+                };
+            }
+            return {
+                isValid: true,
+                message: 'Completed successfully!'
             };
         };
 
         this.validators.last_name = function (value) {
-            return value.length > 0 ? {
-                isValid: true
-            } : {
-                isValid: false,
-                message: "You must enter a last name."
+            if (value.length == 0) {
+                return {
+                    isValid: false,
+                    message: 'You must enter your last name.'
+                };
+            }
+            if (!self.stringRegex.test(value)) {
+                return {
+                    isValid: false,
+                    message: 'You must enter a valid last name!'
+                };
+            }
+            return {
+                isValid: true,
+                message: 'Completed successfully!'
             };
         };
 
         this.validators.email = function (value) {
-            var regexp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-            return (regexp.test(value) === true) ? {
-                isValid: true
-            } : {
+            if (value.length == 0) {
+                return {
+                    isValid: false,
+                    message: 'You must enter an email address!'
+                };
+            }
+            if (!self.emailRegex.test(value)) {
+                return {
+                    isValid: false,
+                    message: 'You must enter a valid email address!'
+                };
+            }
+            return {
+                isValid: true,
+                message: 'Completed successfully!'
+            };
+        };
+
+        this.validators.identity = function (value) {
+            return value == "-1" ? {
                 isValid: false,
-                message: "You must enter a valid email address."
+                message: "You must select a user identity level."
+            } : {
+                isValid: true
+            };
+        };
+
+        this.validators.validated = function (value) {
+            return value == "-1" ? {
+                isValid: false,
+                message: "You must select if user has been validated."
+            } : {
+                isValid: true
             };
         };
     },
@@ -73,8 +155,8 @@ window.User = Backbone.Model.extend({
         last_name: "",
         password: "",
         email: "",
-        identity: 0,
-        verified: 0,
+        identity: "-1",
+        verified: "-1",
         created: "",
         updated: ""
     }
@@ -88,8 +170,8 @@ window.UserAdd = User.extend({
         last_name: "",
         password: "",
         email: "",
-        identity: 0,
-        verified: 0,
+        identity: "-1",
+        verified: "-1",
         created: "",
         updated: ""
     }

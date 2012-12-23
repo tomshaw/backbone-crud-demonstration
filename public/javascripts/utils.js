@@ -10,15 +10,15 @@ utils.displayValidationErrors = function (messages) {
 };
 
 utils.addValidationError = function (field, message) {
-    var controlGroup = $('#' + field).parent().parent().parent();
+    var controlGroup = (field == 'identity' || field == 'verified') ? $('#' + field).parent().parent(): $('#' + field).parent().parent().parent();
     controlGroup.addClass('error');
     $('.help-block', controlGroup).html(message);
 };
 
-utils.removeValidationError = function (field) {
-    var controlGroup = $('#' + field).parent().parent().parent();
+utils.removeValidationError = function (field, message) {
+	var controlGroup = (field == 'identity' || field == 'verified') ? $('#' + field).parent().parent(): $('#' + field).parent().parent().parent();
     controlGroup.removeClass('error');
-    $('.help-block', controlGroup).html('Completed successfully.');
+    $('.help-block', controlGroup).html(message ? message : 'Completed successfully.');
 };
 
 utils.showAlert = function (title, text, klass) {

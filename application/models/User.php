@@ -66,14 +66,24 @@ class Model_User extends Zend_Db_Table_Abstract
         return $select;
     }
     
-    public function fetchStores()
+    public function nameSearch($userName)
     {
         $select = $this->select()
             ->setIntegrityCheck(false)
             ->distinct(true)
-            ->from('store', array('store_id','store_name'))
-            ->order('store_id ASC');
-        return $this->getAdapter()->fetchPairs($select);
+            ->from($this->getTableName(), array('username'))
+            ->where('LOWER(username) = ?', strtolower($userName));
+        return $this->fetchRow($select);
+    }
+    
+    public function emailSearch($email)
+    {
+        $select = $this->select()
+            ->setIntegrityCheck(false)
+            ->distinct(true)
+            ->from($this->getTableName(), array('email'))
+            ->where('LOWER(email) = ?', strtolower($email));
+        return $this->fetchRow($select);
     }
     
 }

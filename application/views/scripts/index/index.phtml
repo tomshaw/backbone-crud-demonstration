@@ -173,8 +173,8 @@ tr th a:hover {
           <label class="control-label" for="username">Username:</label>
           <div class="controls">
             <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
-              <input type="text" class="input-xlarge" id="username" name="username" value="<%= _.escape(username || '') %>">
-              <p class="help-block">Please enter your desired username.</p>
+              <input type="text" class="input-medium search-name" id="username" name="username" value="<%= _.escape(username || '') %>">
+              <p class="help-block">Choose your username.</p>
             </div>
           </div>
         </div>
@@ -183,7 +183,7 @@ tr th a:hover {
           <div class="controls">
             <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
               <input type="text" class="input-xlarge" id="password" name="password" value="<%= _.escape(password || '') %>">
-              <p class="help-block">Please enter your email address.</p>
+              <p class="help-block">Passwords must must containt atleast six characters.</p>
             </div>
           </div>
         </div>
@@ -218,11 +218,12 @@ tr th a:hover {
           <label class="control-label" for="identity">Select identity:</label>
           <div class="controls">
             <select id="identity" name="identity">
-              <% _.each(identities, function(val, key) { %>
+              <% _.each(_.extend({'-1':'Select Identity'}, identities), function(val, key) { %>
               <% var selected = (identity== key) ? 'selected="selected"' : ''; %>
               <option value="<%= key %>" <%= selected %>><%= val %></option>
               <% }); %>
             </select>
+            <p class="help-block">Please select a user identity level.</p>
           </div>
         </div>
         <div class="control-group">

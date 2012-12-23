@@ -38,3 +38,10 @@ td.lettering {
 	text-align:right;
 	padding-right:5px;
 }
+
+input.search-name {
+    border-top-right-radius: 15px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 15px;
+}

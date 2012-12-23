@@ -104,7 +104,6 @@ window.UserListView = Backbone.View.extend({
         userDelete.set({
             id: userId
         });
-        //userDelete.get("id");
         userDelete.destroy({
             success: function (response) {
                 app.navigate('#index/page/1', true);
@@ -178,6 +177,9 @@ window.UserModalView = Backbone.View.extend({
 
 window.UserAddView = Backbone.View.extend({
 
+	stringRegex: /^([a-zA-Z0-9]){0,1}([a-zA-Z0-9])+$/,
+    emailRegex: /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
+    
     initialize: function (options) {
         this.template = _.template($("#UserAddView").html());
         this.render();
@@ -185,7 +187,43 @@ window.UserAddView = Backbone.View.extend({
 
     events: {
         "change": "change",
+        "blur input[id='username']": "checkUsername",
+        "blur input[id='email']": "checkEmail",
         "click #submit": "beforeSave"
+    },
+    
+    checkUsername: function (event) {
+    	var target = event.target;
+    	nameCheck.set({username: target.value});
+    	nameCheck.fetch({
+    		success: function (resp) {
+    			var check = resp.attributes;
+    	        if (check.isValid === false) {
+    	            utils.addValidationError(target.id, check.message);
+    	        } else if (!stringRegex.test(target.value)) {
+    	        	utils.addValidationError(target.id, 'You must enter a valid username.');
+    	        } else {
+    	            utils.removeValidationError(target.id, check.message);
+    	        }
+    		}
+    	});
+    },
+    
+    checkEmail: function (event) {
+    	var target = event.target;
+    	emailCheck.set({email: target.value});
+    	emailCheck.fetch({
+    		success: function (resp) {
+    			var check = resp.attributes;
+    	        if (check.isValid === false) {
+    	            utils.addValidationError(target.id, check.message);
+    	        } else if (!emailRegex.test(target.value)) {
+    	        	utils.addValidationError(target.id, 'You must enter a valid email address.');
+    	        } else {
+    	            utils.removeValidationError(target.id, check.message);
+    	        }
+    		}
+    	});
     },
 
     change: function (event) {

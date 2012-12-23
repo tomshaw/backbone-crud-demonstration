@@ -143,6 +143,54 @@ class IndexController extends Zend_Controller_Action
         ))));
     }
     
+    public function usernameAction()
+    {
+    	$this->norender();
+    
+    	$name = $this->getRequest()->getParam('username');
+    
+    	$model = new Model_User();
+    
+    	$row = $model->nameSearch($name);
+    	
+    	$response = array();
+    	$response['profiler'] = $this->getInvokeArg('bootstrap')->profiler();
+    
+    	if (!sizeof($row)) {
+    		$response['isValid'] = true;
+    		$response['message'] = 'Your username look good!';
+    	} else {
+    		$response['isValid'] = false;
+    		$response['message'] = 'This username is already taken!';
+    	}
+    	
+    	$this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode($response));
+    }
+    
+    public function emailAction()
+    {
+    	$this->norender();
+    
+    	$email = $this->getRequest()->getParam('email');
+    
+    	$model = new Model_User();
+    
+    	$row = $model->emailSearch($email);
+    	 
+    	$response = array();
+    	$response['profiler'] = $this->getInvokeArg('bootstrap')->profiler();
+    
+    	if (!sizeof($row)) {
+    		$response['isValid'] = true;
+    		$response['message'] = 'Your email address looks good!';
+    	} else {
+    		$response['isValid'] = false;
+    		$response['message'] = 'This email address is already in use!';
+    	}
+    	 
+    	$this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode($response));
+    }
+    
     public function deleteAction()
     {
         $this->norender();
