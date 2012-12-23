@@ -23,15 +23,15 @@ window.HeaderView = Backbone.View.extend({
 window.UserListView = Backbone.View.extend({
 
     template: _.template($('#UserListView').html()),
-    
-    characters: ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
+
+    characters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
     letter: false,
-    
+
     page: 1,
     sort: 'asc',
-    
+
     search: {
-    	username: "",
+        username: "",
         name: "",
         email: "",
         identity: "-1",
@@ -73,7 +73,7 @@ window.UserListView = Backbone.View.extend({
             profiler: this.model.profiler
         }).render().el);
         try {
-        	$("input[id='data[created]']", this.el).datepicker({
+            $("input[id='data[created]']", this.el).datepicker({
                 dateFormat: 'yy-mm-dd'
             });
         } catch (error) {
@@ -93,8 +93,8 @@ window.UserListView = Backbone.View.extend({
     tableRowClick: function (event) {
         utils.hideAlert();
         var href = $(event.target).closest('tr').attr('data-href');
-        if (typeof(href) !== "undefined") {
-            app.navigate(href, true);	
+        if (typeof (href) !== "undefined") {
+            app.navigate(href, true);
         }
     },
 
@@ -118,9 +118,9 @@ window.UserListView = Backbone.View.extend({
         var userId = $(event.target).closest('tr').attr('id');
         app.navigate("#index/view/id/" + userId, true);
     },
-    
+
     gridsubmit: function (event) {
-    	this.search.username = this.$("input[id='data[username]']").val();
+        this.search.username = this.$("input[id='data[username]']").val();
         this.search.name = this.$("input[id='data[name]']").val();
         this.search.email = this.$("input[id='data[email]']").val();
         this.search.identity = this.$("select[id='data[identity]']").val();
@@ -131,7 +131,7 @@ window.UserListView = Backbone.View.extend({
             type: 'POST'
         });
     },
-    
+
     gridreset: function (event) {
         app.navigate("/", true);
     }
@@ -177,9 +177,9 @@ window.UserModalView = Backbone.View.extend({
 
 window.UserAddView = Backbone.View.extend({
 
-	stringRegex: /^([a-zA-Z0-9]){0,1}([a-zA-Z0-9])+$/,
+    stringRegex: /^([a-zA-Z0-9]){0,1}([a-zA-Z0-9])+$/,
     emailRegex: /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
-    
+
     initialize: function (options) {
         this.template = _.template($("#UserAddView").html());
         this.render();
@@ -191,39 +191,43 @@ window.UserAddView = Backbone.View.extend({
         "blur input[id='email']": "checkEmail",
         "click #submit": "beforeSave"
     },
-    
+
     checkUsername: function (event) {
-    	var target = event.target;
-    	nameCheck.set({username: target.value});
-    	nameCheck.fetch({
-    		success: function (resp) {
-    			var check = resp.attributes;
-    	        if (check.isValid === false) {
-    	            utils.addValidationError(target.id, check.message);
-    	        } else if (!stringRegex.test(target.value)) {
-    	        	utils.addValidationError(target.id, 'You must enter a valid username.');
-    	        } else {
-    	            utils.removeValidationError(target.id, check.message);
-    	        }
-    		}
-    	});
+        var target = event.target;
+        nameCheck.set({
+            username: target.value
+        });
+        nameCheck.fetch({
+            success: function (resp) {
+                var check = resp.attributes;
+                if (check.isValid === false) {
+                    utils.addValidationError(target.id, check.message);
+                } else if (!stringRegex.test(target.value)) {
+                    utils.addValidationError(target.id, 'You must enter a valid username.');
+                } else {
+                    utils.removeValidationError(target.id, check.message);
+                }
+            }
+        });
     },
-    
+
     checkEmail: function (event) {
-    	var target = event.target;
-    	emailCheck.set({email: target.value});
-    	emailCheck.fetch({
-    		success: function (resp) {
-    			var check = resp.attributes;
-    	        if (check.isValid === false) {
-    	            utils.addValidationError(target.id, check.message);
-    	        } else if (!emailRegex.test(target.value)) {
-    	        	utils.addValidationError(target.id, 'You must enter a valid email address.');
-    	        } else {
-    	            utils.removeValidationError(target.id, check.message);
-    	        }
-    		}
-    	});
+        var target = event.target;
+        emailCheck.set({
+            email: target.value
+        });
+        emailCheck.fetch({
+            success: function (resp) {
+                var check = resp.attributes;
+                if (check.isValid === false) {
+                    utils.addValidationError(target.id, check.message);
+                } else if (!emailRegex.test(target.value)) {
+                    utils.addValidationError(target.id, 'You must enter a valid email address.');
+                } else {
+                    utils.removeValidationError(target.id, check.message);
+                }
+            }
+        });
     },
 
     change: function (event) {
@@ -347,12 +351,14 @@ window.UserReviewView = Backbone.View.extend({
 window.ProfilerView = Backbone.View.extend({
 
     initialize: function (options) {
-    	this.profiler = this.options.profiler;
+        this.profiler = this.options.profiler;
         this.template = _.template($("#ProfilerView").html());
     },
 
     render: function (event) {
-        $(this.el).html(this.template({data: this.profiler}));
+        $(this.el).html(this.template({
+            data: this.profiler
+        }));
         return this;
     }
 });
