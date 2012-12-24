@@ -177,9 +177,6 @@ window.UserModalView = Backbone.View.extend({
 
 window.UserAddView = Backbone.View.extend({
 
-    stringRegex: /^([a-zA-Z0-9]){0,1}([a-zA-Z0-9])+$/,
-    emailRegex: /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
-
     initialize: function (options) {
         this.template = _.template($("#UserAddView").html());
         this.render();
@@ -202,7 +199,7 @@ window.UserAddView = Backbone.View.extend({
                 var check = resp.attributes;
                 if (check.isValid === false) {
                     utils.addValidationError(target.id, check.message);
-                } else if (!stringRegex.test(target.value)) {
+                } else if (!utils.stringRegex.test(target.value)) {
                     utils.addValidationError(target.id, 'You must enter a valid username.');
                 } else {
                     utils.removeValidationError(target.id, check.message);
@@ -221,7 +218,7 @@ window.UserAddView = Backbone.View.extend({
                 var check = resp.attributes;
                 if (check.isValid === false) {
                     utils.addValidationError(target.id, check.message);
-                } else if (!emailRegex.test(target.value)) {
+                } else if (!utils.emailRegex.test(target.value)) {
                     utils.addValidationError(target.id, 'You must enter a valid email address.');
                 } else {
                     utils.removeValidationError(target.id, check.message);
@@ -304,7 +301,6 @@ window.UserEditView = Backbone.View.extend({
         } else {
             utils.removeValidationError(target.id);
         }
-        console.log('change event');
     },
 
     render: function (event) {
@@ -314,7 +310,6 @@ window.UserEditView = Backbone.View.extend({
 
     beforeSave: function () {
         var check = this.model.validateAll();
-        console.log('check', check);
         if (check.isValid === false) {
             utils.displayValidationErrors(check.messages);
             return false;
@@ -324,7 +319,6 @@ window.UserEditView = Backbone.View.extend({
     },
 
     updateUser: function () {
-    	console.log('update user');
         var page = this.getPage();
         this.model.save(null, {
             success: function (response) {

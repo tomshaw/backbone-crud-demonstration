@@ -22,10 +22,7 @@ window.User = Backbone.Model.extend({
     idAttribute: "id",
 
     initialize: function () {
-        var self = this;
         this.validators = {};
-        this.stringRegex = /^([a-zA-Z0-9]){0,1}([a-zA-Z0-9])+$/;
-        this.emailRegex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
         this.validators.username = function (value) {
             if (value.length == 0) {
                 return {
@@ -33,7 +30,7 @@ window.User = Backbone.Model.extend({
                     message: 'You must choose a username.'
                 };
             }
-            if (!self.stringRegex.test(value)) {
+            if (!utils.stringRegex.test(value)) {
                 return {
                     isValid: false,
                     message: 'You must enter a valid username!'
@@ -65,7 +62,7 @@ window.User = Backbone.Model.extend({
                     message: 'You must enter an email address!'
                 };
             }
-            if (!self.emailRegex.test(value)) {
+            if (!utils.emailRegex.test(value)) {
                 return {
                     isValid: false,
                     message: 'You must enter a valid email address!'

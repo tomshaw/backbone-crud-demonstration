@@ -1,5 +1,8 @@
 var utils = utils || {};
 
+utils.stringRegex = /^([a-zA-Z0-9]){0,1}([a-zA-Z0-9])+$/;
+utils.emailRegex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
 utils.displayValidationErrors = function (messages) {
     for (var key in messages) {
         if (messages.hasOwnProperty(key)) {
