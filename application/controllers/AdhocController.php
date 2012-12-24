@@ -62,6 +62,8 @@ class AdhocController extends Zend_Controller_Action
             $row->first_name = $firstName;
             $row->last_name  = $lastName;
             
+            $row->full_name = $firstName . ' ' . $lastName;
+            
             $email    = strtolower($row->email);
             $parts    = explode('@', $email);
             $randKey  = array_rand($domains);

@@ -32,7 +32,7 @@ window.UserListView = Backbone.View.extend({
 
     search: {
         username: "",
-        name: "",
+        full_name: "",
         email: "",
         identity: "-1",
         verified: "-1",
@@ -121,7 +121,7 @@ window.UserListView = Backbone.View.extend({
 
     gridsubmit: function (event) {
         this.search.username = this.$("input[id='data[username]']").val();
-        this.search.name = this.$("input[id='data[name]']").val();
+        this.search.full_name = this.$("input[id='data[full_name]']").val();
         this.search.email = this.$("input[id='data[email]']").val();
         this.search.identity = this.$("select[id='data[identity]']").val();
         this.search.verified = this.$("select[id='data[verified]']").val();
@@ -304,6 +304,7 @@ window.UserEditView = Backbone.View.extend({
         } else {
             utils.removeValidationError(target.id);
         }
+        console.log('change event');
     },
 
     render: function (event) {
@@ -313,6 +314,7 @@ window.UserEditView = Backbone.View.extend({
 
     beforeSave: function () {
         var check = this.model.validateAll();
+        console.log('check', check);
         if (check.isValid === false) {
             utils.displayValidationErrors(check.messages);
             return false;
@@ -322,6 +324,7 @@ window.UserEditView = Backbone.View.extend({
     },
 
     updateUser: function () {
+    	console.log('update user');
         var page = this.getPage();
         this.model.save(null, {
             success: function (response) {

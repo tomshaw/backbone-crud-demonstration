@@ -117,8 +117,7 @@ class IndexController extends Zend_Controller_Action
             $data               = array();
             $data['id']         = intval($put['id']);
             $data['username']   = $put['username'];
-            $data['first_name'] = $put['first_name'];
-            $data['last_name']  = $put['last_name'];
+            $data['full_name']  = $put['full_name'];
             $data['email']      = $put['email'];
             $data['identity']   = intval($put['identity']);
             $data['verified']   = intval($put['verified']);

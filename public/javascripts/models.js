@@ -45,36 +45,11 @@ window.User = Backbone.Model.extend({
             };
         };
 
-        this.validators.first_name = function (value) {
+        this.validators.full_name = function (value) {
             if (value.length == 0) {
                 return {
                     isValid: false,
-                    message: 'You must enter your first name.'
-                };
-            }
-            if (!self.stringRegex.test(value)) {
-                return {
-                    isValid: false,
-                    message: 'You must enter a valid first name.'
-                };
-            }
-            return {
-                isValid: true,
-                message: 'Completed successfully!'
-            };
-        };
-
-        this.validators.last_name = function (value) {
-            if (value.length == 0) {
-                return {
-                    isValid: false,
-                    message: 'You must enter your last name.'
-                };
-            }
-            if (!self.stringRegex.test(value)) {
-                return {
-                    isValid: false,
-                    message: 'You must enter a valid last name!'
+                    message: 'You must enter your full name.'
                 };
             }
             return {
@@ -151,8 +126,7 @@ window.User = Backbone.Model.extend({
     defaults: {
         id: "",
         username: "",
-        first_name: "",
-        last_name: "",
+        full_name: "",
         password: "",
         email: "",
         identity: "-1",
@@ -166,8 +140,7 @@ window.UserAdd = User.extend({
     urlRoot: "index/add",
     defaults: {
         username: "",
-        first_name: "",
-        last_name: "",
+        full_name: "",
         password: "",
         email: "",
         identity: "-1",
@@ -190,8 +163,7 @@ window.UserList = Backbone.Model.extend({
         items: {
             id: "",
             username: "",
-            first_name: "",
-            last_name: "",
+            full_name: "",
             password: "",
             email: "",
             identity: 0,
