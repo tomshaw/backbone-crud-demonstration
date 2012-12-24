@@ -32,7 +32,7 @@ window.UserListView = Backbone.View.extend({
 
     search: {
         username: "",
-        full_name: "",
+        fullname: "",
         email: "",
         identity: "-1",
         verified: "-1",
@@ -121,7 +121,7 @@ window.UserListView = Backbone.View.extend({
 
     gridsubmit: function (event) {
         this.search.username = this.$("input[id='data[username]']").val();
-        this.search.full_name = this.$("input[id='data[full_name]']").val();
+        this.search.fullname = this.$("input[id='data[fullname]']").val();
         this.search.email = this.$("input[id='data[email]']").val();
         this.search.identity = this.$("select[id='data[identity]']").val();
         this.search.verified = this.$("select[id='data[verified]']").val();

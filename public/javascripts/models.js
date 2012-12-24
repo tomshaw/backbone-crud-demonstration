@@ -42,7 +42,7 @@ window.User = Backbone.Model.extend({
             };
         };
 
-        this.validators.full_name = function (value) {
+        this.validators.fullname = function (value) {
             if (value.length == 0) {
                 return {
                     isValid: false,
@@ -123,7 +123,7 @@ window.User = Backbone.Model.extend({
     defaults: {
         id: "",
         username: "",
-        full_name: "",
+        fullname: "",
         password: "",
         email: "",
         identity: "-1",
@@ -137,7 +137,7 @@ window.UserAdd = User.extend({
     urlRoot: "index/add",
     defaults: {
         username: "",
-        full_name: "",
+        fullname: "",
         password: "",
         email: "",
         identity: "-1",
@@ -160,7 +160,7 @@ window.UserList = Backbone.Model.extend({
         items: {
             id: "",
             username: "",
-            full_name: "",
+            fullname: "",
             password: "",
             email: "",
             identity: 0,

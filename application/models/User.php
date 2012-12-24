@@ -40,8 +40,8 @@ class Model_User extends Zend_Db_Table_Abstract
             $select->where('LOWER(username) LIKE ?', '%' . strtolower($data['username']) . '%');
         }
         
-        if (isset($data['full_name']) && !empty($data['full_name'])) {
-            $select->where('LOWER(full_name) LIKE ?', '%' . strtolower($data['full_name']) . '%');
+        if (isset($data['fullname']) && !empty($data['fullname'])) {
+            $select->where('LOWER(fullname) LIKE ?', '%' . strtolower($data['fullname']) . '%');
         }
         
         if (isset($data['email']) && !empty($data['email'])) {

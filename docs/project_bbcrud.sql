@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2012 at 10:38 AM
+-- Generation Time: Dec 24, 2012 at 11:15 AM
 -- Server version: 5.5.28
 -- PHP Version: 5.3.15
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `user` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `full_name` varchar(32) DEFAULT NULL,
+  `fullname` varchar(32) DEFAULT NULL,
   `password` varchar(16) NOT NULL,
   `identity` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `email` varchar(32) DEFAULT NULL,
@@ -39,13 +39,13 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=605 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=607 ;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `full_name`, `password`, `identity`, `email`, `verified`, `created`, `updated`, `username`) VALUES
+INSERT INTO `user` (`id`, `fullname`, `password`, `identity`, `email`, `verified`, `created`, `updated`, `username`) VALUES
 (1, 'Tommy  Jones', 'ef262385890fcf5c', 2, 'tommyjones@earthlink.net', 1, '2006-02-14 22:04:36', '2012-12-24 16:35:44', 'tommy jones'),
 (2, 'Patricia Johnson', '8d4b06faad4b64da', 1, 'patricia.johnson@netzero.net', 1, '2006-02-14 22:04:36', '2012-12-24 16:35:44', 'PatriciaJohnson'),
 (3, 'Linda Williams', '6fd14bb43c22515f', 2, 'linda.williams@charter.com', 1, '2006-02-14 22:04:36', '2012-12-24 16:35:44', 'LindaWilliams'),
@@ -409,7 +409,7 @@ INSERT INTO `user` (`id`, `full_name`, `password`, `identity`, `email`, `verifie
 (361, 'Lawrence Lawton', '1cddffe2935426bf', 1, 'lawrence.lawton@juno.com', 1, '2006-02-14 22:04:37', '2012-12-24 16:35:45', 'LawrenceLawton'),
 (362, 'Nicholas Barfield', '67a0dca50a0e82c5', 1, 'nicholas.barfield@att.net', 1, '2006-02-14 22:04:37', '2012-12-24 16:35:45', 'NicholasBarfiel'),
 (363, 'Roy Whiting', '4fdacaa9f4cba021', 1, 'roy.whiting@comcast.com', 1, '2006-02-14 22:04:37', '2012-12-24 16:35:45', 'roywhiting');
-INSERT INTO `user` (`id`, `full_name`, `password`, `identity`, `email`, `verified`, `created`, `updated`, `username`) VALUES
+INSERT INTO `user` (`id`, `fullname`, `password`, `identity`, `email`, `verified`, `created`, `updated`, `username`) VALUES
 (364, 'Benjamin Varney', 'a157e1576f910dfe', 1, 'benjamin.varney@live.com', 1, '2006-02-14 22:04:37', '2012-12-24 16:35:45', 'BenjaminVarney'),
 (365, 'Bruce Schwarz', '67042c4a4f5237b3', 2, 'bruce.schwarz@live.com', 1, '2006-02-14 22:04:37', '2012-12-24 16:35:45', 'BruceSchwarz'),
 (366, 'Brandon Huey', '000b4d138c8d90f1', 2, 'brandon.huey@hotmail.com', 1, '2006-02-14 22:04:37', '2012-12-24 16:35:45', 'brandonhuey'),
@@ -646,7 +646,7 @@ INSERT INTO `user` (`id`, `full_name`, `password`, `identity`, `email`, `verifie
 (597, 'Freddie Duggan', 'a3ce3cacf3e1d8a3', 1, 'freddie.duggan@juno.com', 1, '2006-02-14 22:04:37', '2012-12-24 16:35:45', 'freddieduggan'),
 (598, 'Wade Delvalle', 'e3c2ea021f7655e4', 2, 'wade.delvalle@netzero.net', 1, '2006-02-14 22:04:37', '2012-12-24 16:35:45', 'WadeDelvalle'),
 (599, 'Austin Cintron', '877a339a404a36e8', 1, 'austin.cintron@gmail.com', 1, '2006-02-14 22:04:37', '2012-12-24 16:35:45', 'AustinCintron'),
-(604, 'Tom Shaw', 'ab01877878ab9ce9', 2, 'tom@windstream.com', 1, '2012-12-21 23:50:08', '2012-12-24 16:35:45', 'tomshaw');
+(604, 'Tom Shaw', '57114515ff1d76a8', 4, 'tom@windstream.com', 1, '2012-12-21 23:50:08', '2012-12-24 17:13:56', 'tomshaw');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
