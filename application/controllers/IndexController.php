@@ -218,6 +218,11 @@ class IndexController extends Zend_Controller_Action
         )));
     }
     
+    public function jasmineAction()
+    {
+    	$this->_helper->getHelper('layout')->setLayout('jasmine');
+    }
+    
     private function loadIdentities()
     {
         $cache = Zend_Registry::get('cache');
