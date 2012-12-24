@@ -173,7 +173,7 @@ tr th a:hover {
           <label class="control-label" for="username">Username:</label>
           <div class="controls">
             <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
-              <input type="text" class="input-medium search-name" id="username" name="username" value="<%= _.escape(username || '') %>">
+              <input type="text" class="input-medium search-name" id="username" name="username" maxlength="15" value="<%= _.escape(username || '') %>" title="Username" placeholder="Username">
               <p class="help-block">Choose your username.</p>
             </div>
           </div>
@@ -182,7 +182,7 @@ tr th a:hover {
           <label class="control-label" for="password">Password:</label>
           <div class="controls">
             <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
-              <input type="password" class="input-medium" id="password" name="password" value="<%= _.escape(password || '') %>">
+              <input type="password" class="input-medium" id="password" name="password" maxlength="16" value="<%= _.escape(password || '') %>" title="Password" placeholder="Password">
               <p class="help-block">Passwords must must containt atleast six characters.</p>
             </div>
           </div>
@@ -191,7 +191,7 @@ tr th a:hover {
           <label class="control-label" for="fullname">Full name:</label>
           <div class="controls">
             <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
-              <input type="text" class="input-medium" id="fullname" name="fullname" value="<%= _.escape(fullname || '') %>">
+              <input type="text" class="input-medium" id="fullname" name="fullname" maxlength="20" value="<%= _.escape(fullname || '') %>" title="Full name" placeholder="Full name">
               <p class="help-block">Please enter your full name.</p>
             </div>
           </div>
@@ -200,7 +200,7 @@ tr th a:hover {
           <label class="control-label" for="email">Email address:</label>
           <div class="controls">
             <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
-              <input type="text" class="input-xlarge" id="email" name="email" value="<%= _.escape(email || '') %>">
+              <input type="text" class="input-xlarge" id="email" name="email" maxlength="64" value="<%= _.escape(email || '') %>" title="Email" placeholder="Email">
               <p class="help-block">Please enter your email address.</p>
             </div>
           </div>
@@ -246,7 +246,7 @@ tr th a:hover {
       <label class="control-label" for="username">Username:</label>
       <div class="controls">
         <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
-          <input type="text" class="input-xlarge" id="username" name="username" value="<%= _.escape(username || '') %>">
+          <input type="text" class="input-xlarge" id="username" name="username" maxlength="15" value="<%= _.escape(username || '') %>" title="Username" placeholder="Username">
           <p class="help-block">Please enter your desired username.</p>
         </div>
       </div>
@@ -255,7 +255,7 @@ tr th a:hover {
       <label class="control-label" for="password">Password:</label>
       <div class="controls">
         <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
-          <input type="password" class="input-medium" id="password" name="password" value="">
+          <input type="password" class="input-medium" id="password" name="password" maxlength="16" value="" title="Password" placeholder="Password">
           <p class="help-block">Please enter your email address.</p>
         </div>
       </div>
@@ -264,7 +264,7 @@ tr th a:hover {
       <label class="control-label" for="fullname">Full name:</label>
       <div class="controls">
         <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
-          <input type="text" class="input-medium" id="fullname" name="fullname" value="<%= _.escape(fullname || '') %>">
+          <input type="text" class="input-medium" id="fullname" name="fullname" maxlength="20" value="<%= _.escape(fullname || '') %>" title="Full name" placeholder="Full name">
           <p class="help-block">Please enter your full name.</p>
         </div>
       </div>
@@ -273,7 +273,7 @@ tr th a:hover {
       <label class="control-label" for="email">Email address:</label>
       <div class="controls">
         <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
-          <input type="text" class="input-xlarge" id="email" name="email" value="<%= _.escape(email || '') %>">
+          <input type="text" class="input-xlarge" id="email" name="email" maxlength="64" value="<%= _.escape(email || '') %>" title="Email" placeholder="Email">
           <p class="help-block">Please enter your email address.</p>
         </div>
       </div>

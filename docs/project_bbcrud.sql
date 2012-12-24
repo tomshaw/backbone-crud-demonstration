@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2012 at 11:15 AM
+-- Generation Time: Dec 24, 2012 at 11:48 AM
 -- Server version: 5.5.28
 -- PHP Version: 5.3.15
 
@@ -31,11 +31,11 @@ CREATE TABLE IF NOT EXISTS `user` (
   `fullname` varchar(32) DEFAULT NULL,
   `password` varchar(16) NOT NULL,
   `identity` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `email` varchar(32) DEFAULT NULL,
+  `email` varchar(64) DEFAULT NULL,
   `verified` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `created` datetime NOT NULL,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `username` varchar(16) NOT NULL,
+  `username` varchar(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
