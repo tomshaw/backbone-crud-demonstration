@@ -1,5 +1,7 @@
 window.HeaderView = Backbone.View.extend({
-
+	
+    el: ".header",
+    
     template: "#HeaderView",
 
     initialize: function (options) {

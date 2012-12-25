@@ -22,6 +22,12 @@
   * Table grid that supports sorting, searching and paginating result sets.
   * Zend Firebug Database Profiler Asynchronous Query Logging
   
+### Screenshots
+Here's an example of what this project looks like.
+
+#### Screenshot
+![BBCRUD](https://raw.github.com/tomshaw/bbcrud/master/docs/bbcrud.png)
+  
 ## Technologies
 
   * Backbone.js 0.9.9
