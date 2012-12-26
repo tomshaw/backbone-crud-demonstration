@@ -12,7 +12,7 @@
     (_'_______________________________________________________________________________'_)
     (_.ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ._)
       
-  BBCRUD is a sample Backbone.js CRUD application (C)reate (R)ead (U)pdate (D)elete developed to learn how to use Backbone.js. I'm using Zend Framework 1.12 on the server end, development & testing is being done on a running OSX Lion.
+  BBCRUD is a sample Backbone.js CRUD application (C)reate (R)ead (U)pdate (D)elete developed to learn how to use Backbone.js. I'm using Zend Framework 1.12 on the server end, development & testing is being done running OS X v10.8.
   
   Thanks to numerous tutorials and example projects found on the web for a majority of the code concepts found in this project.
   
