@@ -41,7 +41,7 @@ class IndexController extends Zend_Controller_Action
         $data = ($request->isPost()) ? $request->getPost() : array();
         
         if ($letter != '') {
-        	$data['letter'] = $letter;
+            $data['letter'] = $letter;
         }
         
         if (sizeof($data)) {
@@ -156,13 +156,13 @@ class IndexController extends Zend_Controller_Action
     	$response = array();
     	$response['profiler'] = $this->getInvokeArg('bootstrap')->profiler();
     
-    	if (!sizeof($row)) {
-    		$response['isValid'] = true;
-    		$response['message'] = 'Your username look good!';
-    	} else {
-    		$response['isValid'] = false;
-    		$response['message'] = 'This username is already taken!';
-    	}
+        if (!sizeof($row)) {
+            $response['isValid'] = true;
+            $response['message'] = 'Your username look good!';
+        } else {
+            $response['isValid'] = false;
+            $response['message'] = 'This username is already taken!';
+        }
     	
     	$this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode($response));
     }
@@ -180,13 +180,13 @@ class IndexController extends Zend_Controller_Action
     	$response = array();
     	$response['profiler'] = $this->getInvokeArg('bootstrap')->profiler();
     
-    	if (!sizeof($row)) {
-    		$response['isValid'] = true;
-    		$response['message'] = 'Your email address looks good!';
-    	} else {
-    		$response['isValid'] = false;
-    		$response['message'] = 'This email address is already in use!';
-    	}
+        if (!sizeof($row)) {
+            $response['isValid'] = true;
+            $response['message'] = 'Your email address looks good!';
+        } else {
+            $response['isValid'] = false;
+            $response['message'] = 'This email address is already in use!';
+        }
     	 
     	$this->getResponse()->setHttpResponseCode(200)->appendBody(Zend_Json::encode($response));
     }
