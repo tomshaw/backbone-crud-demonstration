@@ -21,6 +21,7 @@ class IndexController extends Zend_Controller_Action
     
     public function indexAction()
     {
+        $this->view->placeholder('templates')->append($this->view->partial('partials/templates.phtml'));
     }
     
     public function listAction()

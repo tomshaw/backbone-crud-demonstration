@@ -11,14 +11,23 @@
 <?php echo $this->headScript() ?>
 </head>
 <body>
+
 <div class="header"></div>
+
 <div class="container">
-  <div class="row-fluid"> <?php echo $this->layout()->content ?> </div>
+  <div class="row-fluid"> 
+    <div id="content" class="span12">
+      <?php echo $this->layout()->content ?> 
+    </div>
+  </div>
   <footer class="footer">
     <p><a href="http://tomshaw.info/" target="_blank">Backbone.js</a> Testing Application.</p>
   </footer>
   <div id="profiler"></div>
 </div>
+
+<?php echo $this->placeholder('templates') ?>
+
 <script src="/javascripts/vendor/jquery-1.8.3.js"></script> 
 <script src="/javascripts/vendor/jquery-ui-1.9.2.min.js"></script> 
 <script src="/javascripts/vendor/underscore-1.4.3.js"></script> 
@@ -26,5 +35,6 @@
 <script src="/javascripts/vendor/bootstrap.js"></script> 
 <script src="/javascripts/utils.js"></script> 
 <?php echo $this->inlineScript(); ?>
+
 </body>
 </html>
