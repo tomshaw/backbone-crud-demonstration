@@ -26,6 +26,7 @@ var AppRouter = Backbone.Router.extend({
                     model: userListCollection,
                     page: page
                 }).render().el);
+                utils.gridLoader();
             }
         });
         this.headerView.menuItem('home-menu');
@@ -43,6 +44,7 @@ var AppRouter = Backbone.Router.extend({
                     model: userListCollection,
                     page: page
                 }).render().el);
+                utils.gridLoader();
             }
         });
         this.headerView.menuItem('home-menu');
@@ -61,6 +63,7 @@ var AppRouter = Backbone.Router.extend({
                     model: userListCollection,
                     letter: letter
                 }).render().el);
+                utils.gridLoader();
             }
         });
         this.headerView.menuItem('home-menu');
@@ -82,6 +85,7 @@ var AppRouter = Backbone.Router.extend({
                     order: order,
                     sort: sort
                 }).render().el);
+                utils.gridLoader();
             }
         });
         this.headerView.menuItem('home-menu');

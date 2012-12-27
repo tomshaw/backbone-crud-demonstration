@@ -13,13 +13,13 @@ utils.displayValidationErrors = function (messages) {
 };
 
 utils.addValidationError = function (field, message) {
-    var controlGroup = (field == 'identity' || field == 'verified') ? $('#' + field).parent().parent(): $('#' + field).parent().parent().parent();
+    var controlGroup = (field == 'identity' || field == 'verified') ? $('#' + field).parent().parent() : $('#' + field).parent().parent().parent();
     controlGroup.addClass('error');
     $('.help-block', controlGroup).html(message);
 };
 
 utils.removeValidationError = function (field, message) {
-	var controlGroup = (field == 'identity' || field == 'verified') ? $('#' + field).parent().parent(): $('#' + field).parent().parent().parent();
+    var controlGroup = (field == 'identity' || field == 'verified') ? $('#' + field).parent().parent() : $('#' + field).parent().parent().parent();
     controlGroup.removeClass('error');
     $('.help-block', controlGroup).html(message ? message : 'Completed successfully.');
 };
@@ -29,8 +29,37 @@ utils.showAlert = function (title, text, klass) {
     $('.alert').addClass(klass);
     $('.alert .message').html('<strong>' + title + '</strong> ' + text);
     $('.alert').show();
+    var fadeOut = setTimeout("$('.alert').fadeOut('slow');", 3000);
+    $(".alert").click(function () {
+        clearTimeout(fadeOut);
+        $("#message-icon").toggleClass("icon-lock");
+    });
+    /*$(".alert").bind('click hover', function () {
+        clearTimeout(fadeOut);
+        $("#message-icon").attr('class', 'icon-lock');
+        $("#message-icon").toggle('icon-lock');
+    });*/
 };
 
 utils.hideAlert = function () {
     $('.alert').hide();
 };
+
+utils.gridLoader = function () {
+    $('#loader').css('display', 'inline-block');
+    var min = 50;
+    var max = 100;
+    var random = Math.floor(Math.random() * (max - min + 1)) + min;
+    $('.bar').css('width', random + '%');
+    setTimeout("$('#loader').css('display','none');", 300);
+}
+
+utils.formLoader = function () {
+    setTimeout("$('#user-form-modal').modal('hide');", 300);
+    $('#loading').css('display', 'inline-block');
+    var min = 50;
+    var max = 100;
+    var random = Math.floor(Math.random() * (max - min + 1)) + min;
+    $('.bar').css('width', random + '%');
+    setTimeout("$('#loading').css('display','none');", 300);
+}

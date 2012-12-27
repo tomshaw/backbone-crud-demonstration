@@ -19,27 +19,6 @@
 </div>
 </script>
 
-<style>
-.nudge { margin-top:-0.6px; }
-input.gridinput, select.gridinput {
-	margin:0 5px 2px 0;
-	line-height:0;
-	width:90%;
-	border:0;
-	-webkit-border-radius: 1px;
-}
-td .btn-group {
-	margin-top:2px;
-	margin-left:2px;
-}
-tr th a:hover {
-	text-decoration:none;
-}
-.table td {
-	vertical-align: middle;
-}
-</style>
-
 <script id="UserListView" type="text/html">
 <table class="table table-hover table-striped table-bordered table-condensed">
   <thead>
@@ -111,7 +90,7 @@ tr th a:hover {
 
 <script id="PaginatorTemplate" type="text/html">
 <% if(data.pageCount) { %>
-<div class="dataTables_paginate paging_bootstrap pagination" id="jumping">
+<div class="pagination pagination-small pagination-left" id="jumping">
   <ul>
     <% if (data.previous) { %>
     <li class="prev"><a style="cursor:pointer;" href="#index/page/<%= data.first %>">First</a></li>
@@ -138,6 +117,13 @@ tr th a:hover {
     <li class="next disabled"><a href="#">Last</a></li>
     <% } %>
   </ul>
+  <ul>
+    <li class="prev"><a href="#">Results: <%= data.firstItemNumber %>/<%= data.lastItemNumber %></a></li>
+    <li class="prev"><a href="#">Total: <%= data.totalItemCount %></a></li>
+  </ul>
+  <div class="progress progress-striped active" id="loader">
+    <div class="bar" style="width: 95%;"></div>
+  </div>
 </div>
 <% } %>
 </script>
@@ -149,7 +135,11 @@ tr th a:hover {
 <script id="UserModalView" type="text/html">
 <div class="modal hide fade" id="user-form-modal">
   <div class="modal-header">
-    <h3 id="modal-header">Add New User</h3>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3 id="modal-header">Edit User</h3>
+    <div class="progress progress-striped active" id="loading">
+      <div class="bar" style="width:100%;"></div>
+    </div>
   </div>
   <div class="modal-body" id="user-modal-body"></div>
   <div class="modal-footer">
@@ -170,7 +160,7 @@ tr th a:hover {
         <div class="control-group">
           <label class="control-label" for="username">Username:</label>
           <div class="controls">
-            <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
+            <div class="input-prepend"> <span class="add-on"><i class="icon-check"></i></span>
               <input type="text" class="input-medium search-name" id="username" name="username" maxlength="15" value="<%= _.escape(username || '') %>" title="Username" placeholder="Username">
               <p class="help-block">Choose your username.</p>
             </div>
@@ -179,16 +169,16 @@ tr th a:hover {
         <div class="control-group">
           <label class="control-label" for="password">Password:</label>
           <div class="controls">
-            <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
+            <div class="input-prepend"> <span class="add-on"><i class="icon-pencil"></i></span>
               <input type="password" class="input-medium" id="password" name="password" maxlength="16" value="<%= _.escape(password || '') %>" title="Password" placeholder="Password">
-              <p class="help-block">Passwords must must containt atleast six characters.</p>
+              <p class="help-block">Must containt atleast six characters.</p>
             </div>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="fullname">Full name:</label>
           <div class="controls">
-            <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
+            <div class="input-prepend"> <span class="add-on"><i class="icon-user"></i></span>
               <input type="text" class="input-large" id="fullname" name="fullname" maxlength="20" value="<%= _.escape(fullname || '') %>" title="Full name" placeholder="Full name">
               <p class="help-block">Please enter your full name.</p>
             </div>
@@ -197,7 +187,7 @@ tr th a:hover {
         <div class="control-group">
           <label class="control-label" for="email">Email address:</label>
           <div class="controls">
-            <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
+            <div class="input-prepend"> <span class="add-on"><i class="icon-inbox"></i></span>
               <input type="text" class="input-xlarge" id="email" name="email" maxlength="64" value="<%= _.escape(email || '') %>" title="Email" placeholder="Email">
               <p class="help-block">Please enter your email address.</p>
             </div>
@@ -224,6 +214,7 @@ tr th a:hover {
             <label class="checkbox inline">
               <input type="checkbox" id="verified" name="verified" value="1" checked> No
             </label>
+            <p class="help-block">Has this user's email address been verified?</p>
           </div>
         </div>
       </fieldset>
@@ -243,7 +234,7 @@ tr th a:hover {
     <div class="control-group">
       <label class="control-label" for="username">Username:</label>
       <div class="controls">
-        <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
+        <div class="input-prepend"> <span class="add-on"><i class="icon-check"></i></span>
           <input type="text" class="input-medium" id="username" name="username" maxlength="15" value="<%= _.escape(username || '') %>" title="Username" placeholder="Username">
           <p class="help-block">Please enter your desired username.</p>
         </div>
@@ -252,16 +243,16 @@ tr th a:hover {
     <div class="control-group">
       <label class="control-label" for="password">Password:</label>
       <div class="controls">
-        <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
+        <div class="input-prepend"> <span class="add-on"><i class="icon-pencil"></i></span>
           <input type="password" class="input-medium" id="password" name="password" maxlength="16" value="" title="Password" placeholder="Password">
-          <p class="help-block">Please enter your email address.</p>
+          <p class="help-block">Must containt atleast six characters.</p>
         </div>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="fullname">Full name:</label>
       <div class="controls">
-        <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
+        <div class="input-prepend"> <span class="add-on"><i class="icon-user"></i></span>
           <input type="text" class="input-large" id="fullname" name="fullname" maxlength="20" value="<%= _.escape(fullname || '') %>" title="Full name" placeholder="Full name">
           <p class="help-block">Please enter your full name.</p>
         </div>
@@ -270,7 +261,7 @@ tr th a:hover {
     <div class="control-group">
       <label class="control-label" for="email">Email address:</label>
       <div class="controls">
-        <div class="input-prepend"> <span class="add-on"><i class="icon-home"></i></span>
+        <div class="input-prepend"> <span class="add-on"><i class="icon-inbox"></i></span>
           <input type="text" class="input-xlarge" id="email" name="email" maxlength="64" value="<%= _.escape(email || '') %>" title="Email" placeholder="Email">
           <p class="help-block">Please enter your email address.</p>
         </div>
@@ -285,6 +276,7 @@ tr th a:hover {
           <option value="<%= key %>" <%= selected %>><%= val %></option>
           <% }); %>
         </select>
+        <p class="help-block">Please select a user identity level.</p>
       </div>
     </div>
     <div class="control-group">
@@ -296,14 +288,15 @@ tr th a:hover {
         <label class="checkbox inline">
           <input type="checkbox" id="verified" name="verified" value="1" <% if(verified == 0) { %><%= 'checked' %><% } %>> No
         </label>
+        <p class="help-block">Has this user's email address been verified?</p>
       </div>
     </div>
     <div class="control-group">
-      <label class="control-label" for="created">Create date:</label>
+      <label class="control-label" for="created">Registered:</label>
       <div class="controls">
         <div class="input-prepend">
-          <span class="add-on"><i class="icon-home"></i></span><input type="text" class="input-xlarge" id="created" name="created" value="<%= _.escape(created || '') %>">
-          <p class="help-block">Length must be between 3 and 20 characters.</p>
+          <span class="add-on"><i class="icon-calendar"></i></span><input type="text" class="input-xlarge" id="created" name="created" value="<%= _.escape(created || '') %>">
+          <p class="help-block">User registration date.</p>
         </div>
       </div>
     </div>

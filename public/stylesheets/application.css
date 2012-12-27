@@ -1,4 +1,5 @@
 @import url("bootstrap.css");
+
 @import url("bootstrap-responsive.css");
 
 body {
@@ -43,4 +44,47 @@ input.search-name {
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 15px;
+}
+
+#modal-header {
+	display: inline-block;
+}
+
+#loader {
+	display: none;
+	margin: 0 0 3px 10px;
+	padding: 0;
+	width: 150px;
+}
+
+#loading {
+	display: none;
+	margin: 0 0 -2px 15px;
+	padding: 0;
+	width: 150px;
+}
+
+.nudge {
+	margin-top: -0.6px;
+}
+
+input.gridinput,select.gridinput {
+	margin: 0 5px 2px 0;
+	line-height: 0;
+	width: 90%;
+	border: 0;
+	-webkit-border-radius: 1px;
+}
+
+td .btn-group {
+	margin-top: 2px;
+	margin-left: 2px;
+}
+
+tr th a:hover {
+	text-decoration: none;
+}
+
+.table td {
+	vertical-align: middle;
 }

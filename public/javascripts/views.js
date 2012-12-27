@@ -132,6 +132,7 @@ window.UserListView = Backbone.View.extend({
             data: this.search,
             type: 'POST'
         });
+        utils.gridLoader();
     },
 
     gridreset: function (event) {
@@ -141,7 +142,7 @@ window.UserListView = Backbone.View.extend({
 });
 
 window.PaginatorTemplate = Backbone.View.extend({
-
+    
     initialize: function (options) {
         this.template = _.template($("#PaginatorTemplate").html());
     },
@@ -161,7 +162,6 @@ window.UserModalView = Backbone.View.extend({
     },
 
     clickHandler: function (event) {
-        $("#user-form-modal").modal('hide');
         this.eventAggregator.trigger('beforeSave');
     },
 
@@ -310,12 +310,13 @@ window.UserEditView = Backbone.View.extend({
         return this;
     },
 
-    beforeSave: function () {
+    beforeSave: function (event) {
         var check = this.model.validateAll();
         if (check.isValid === false) {
             utils.displayValidationErrors(check.messages);
             return false;
         }
+        utils.formLoader();
         this.updateUser();
         return false;
     },
