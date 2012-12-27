@@ -351,7 +351,7 @@ window.ProfilerView = Backbone.View.extend({
 
     initialize: function (options) {
         this.profiler = this.options.profiler;
-        this.template = _.template($("#ProfilerView").html());
+        this.template = Handlebars.compile($("#ProfilerView").html() );
     },
 
     render: function (event) {

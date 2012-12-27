@@ -31,6 +31,7 @@ Here's an example of what this project looks like.
 ## Technologies
 
   * Backbone.js 0.9.9
+  * Handlebars 1.0.rc.1
   * Underscore.js 1.4.3
   * jQuery 1.8.3
   * jQuery UI 1.9.2

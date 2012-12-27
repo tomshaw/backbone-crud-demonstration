@@ -321,13 +321,13 @@ tr th a:hover {
     </tr>
   </thead>
   <tbody>
-    <% _.each(data.queries, function(query) { %>
+    {{#each data.queries}}
     <tr>
-      <td style="text-align: center;"><%= _.escape(query.count || '') %>.</td>
-      <td><%= _.escape(query.query || '') %></td>
-      <td><i><%= _.escape(query.seconds || '') %></i></td>
+      <td style="text-align: center;">{{count}}.</td>
+      <td>{{query}}</td>
+      <td><i>{{seconds}}</i></td>
     </tr>
-    <% }); %>
+    {{/each}}
   </tbody>
 </table>
 <table class="table table-striped table-bordered table-condensed profiler">
@@ -340,23 +340,23 @@ tr th a:hover {
   <tbody>
     <tr>
       <td>Total milliseconds:</td>
-      <td><%= _.escape(data.elapsed_milliseconds || '') %></td>
+      <td>{{data.elapsed_milliseconds}}</td>
     </tr>
     <tr>
       <td>Average query time:</td>
-      <td><%= _.escape(data.average_query_time || '') %></td>
+      <td>{{data.average_query_time}}</td>
     </tr>
     <tr>
       <td>Queries per second:</td>
-      <td><%= _.escape(data.queries_per_second || '') %></td>
+      <td>{{data.queries_per_second}}</td>
     </tr>
     <tr>
       <td>Longest query time:</td>
-      <td><%= _.escape(data.longest_query_time || '') %></td>
+      <td>{{data.longest_query_time}}</td>
     </tr>
     <tr>
       <td>Longest query id:</td>
-      <td>#<%= _.escape(data.longest_query_id || '') %>.</td>
+      <td>#{{data.longest_query_id}}.</td>
     </tr>
   </tbody>
 </table>
