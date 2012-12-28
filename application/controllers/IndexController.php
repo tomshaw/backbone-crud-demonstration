@@ -10,7 +10,7 @@ class IndexController extends Zend_Controller_Action
     
     public function init()
     {
-        $this->addScript('models')->addScript('collections')->addScript('views')->addScript('router');
+        //$this->addScript('models')->addScript('collections')->addScript('views')->addScript('router');
         
         $this->loadIdentities();
         

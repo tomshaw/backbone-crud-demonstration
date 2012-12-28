@@ -12,13 +12,14 @@
     (_'_______________________________________________________________________________'_)
     (_.ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ._)
       
-  BBCRUD is a sample Backbone.js CRUD application (C)reate (R)ead (U)pdate (D)elete developed to learn how to use Backbone.js. I'm using Zend Framework 1.12 on the server end, development & testing is being done running OS X v10.8.
+  BBCRUD is a sample Backbone.js CRUD application (C)reate (R)ead (U)pdate (D)elete developed to learn how to use Backbone.js. I'm using Zend Framework 1.12 on the server end, development & testing is being done running OS X v10.8. Download the release-v0.1 tag for the non AMD version.
   
   Thanks to numerous tutorials and example projects found on the web for a majority of the code concepts found in this project.
   
 ## Features
 
   * Demonstration of CRUD operations using Backbone.js and Zend Framework.
+  * Asynchronous Module Definition. Utilizes Require.js.
   * Table grid that supports sorting, searching and paginating result sets.
   * Zend Firebug Database Profiler Asynchronous Query Logging
   
@@ -31,6 +32,7 @@ Here's an example of what this project looks like.
 ## Technologies
 
   * Backbone.js 0.9.9
+  * Require.js 2.1.2
   * Handlebars 1.0.rc.1
   * Underscore.js 1.4.3
   * jQuery 1.8.3
@@ -53,7 +55,7 @@ Here's an example of what this project looks like.
 
  List of todo items:
 
-  * An AMD version? Probably so need to learn how to do it.
+  * Implement some worthwhile unit tests.
 
 # Questions or Comments?
 

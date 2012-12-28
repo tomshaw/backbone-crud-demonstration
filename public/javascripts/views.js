@@ -68,7 +68,7 @@ window.UserListView = Backbone.View.extend({
             characters: this.characters,
             letter: this.letter
         }));
-        $(this.el).prepend(new PaginatorTemplate({
+        $(this.el).prepend(new PaginatorView({
             model: this.model
         }).render().el);
         $("#profiler").html(new ProfilerView({
@@ -141,10 +141,10 @@ window.UserListView = Backbone.View.extend({
 
 });
 
-window.PaginatorTemplate = Backbone.View.extend({
+window.PaginatorView = Backbone.View.extend({
     
     initialize: function (options) {
-        this.template = _.template($("#PaginatorTemplate").html());
+        this.template = _.template($("#PaginatorView").html());
     },
 
     render: function (event) {
