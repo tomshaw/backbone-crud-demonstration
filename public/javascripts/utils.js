@@ -1,6 +1,6 @@
 define('utils', [
     'jquery',
-    'jquery-ui'
+    'jqueryui'
 ], function ($, ui) {
 
 	var utils = {

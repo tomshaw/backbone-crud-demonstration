@@ -1,6 +1,6 @@
 define('UserListView', [
     'jquery',
-    'jquery-ui',
+    'jqueryui',
     'utils',
     'underscore',
     'backbone',

@@ -1,22 +1,14 @@
-requirejs.config({
-    shim: {
-        'underscore': {
-            exports: '_'
-        },
-        'backbone': {
-            deps: ['underscore', 'jquery'],
-            exports: 'Backbone'
-        },
-        'bootstrap': {
-            deps: ['jquery'],
-            exports: 'bootstrap'
-        },
-        'handlebars': {
-            exports: 'Handlebars'
-        },
-    },
+{
+    baseUrl: "javascripts",
+    appDir: "../public",
+    dir: "../deploy"
+
+    modules: [{
+        name: "main"
+    }],
 
     paths: {
+        main: 'main',
         jquery: 'lib/jquery-1.8.3',
         jqueryui: 'lib/jquery-ui-1.9.2.min',
         underscore: 'lib/underscore-1.4.3',
@@ -41,23 +33,4 @@ requirejs.config({
         UserModalView: 'views/usermodalview',
         UserReviewView: 'views/userreviewview'
     }
-});
-
-define('App', [
-    'jquery',
-    'underscore',
-    'backbone',
-    'Router'
-], function ($, _, Backbone, Router) {
-    function initialize() {
-        var app = new Router();
-        Backbone.history.start();
-    }
-    return {
-        initialize: initialize
-    };
-});
-
-require(['App'], function (App, Client) {
-    App.initialize();
-});
+}

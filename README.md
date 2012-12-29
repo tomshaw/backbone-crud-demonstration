@@ -48,6 +48,19 @@ Here's an example of what this project looks like.
   * Find the database and load it.
   * Update your application.ini and fill in your MySQL connection information.
   * Setup a virtual host like you normally do for a Zend Framework project.
+  
+## Running the Optimizer
+
+  Make sure you have Node.js installed. In the build directory run the following commands.
+  
+    sudo npm install -g requirejs
+    node r.js -o example1.js
+    
+  or:
+  
+    node example1.js = Outputs and optimizes specified directory.
+    node example2.js = Outputs and optimizes specified directory.
+    node example3.js = Outputs a single build file.
 
 ## Todo
 
