@@ -1,6 +1,11 @@
 requirejs.config({
+    urlArgs: "bust=" + (new Date()).getTime(), // force browser to retrieve file from server not cache
+    //enforceDefine: true, // modules must use define
+    //baseUrl: "scripts", // the root path to use for all module lookups
+    waitSeconds: 200, // seconds to wait before giving up on loading a script. Setting to 0 disables timeout, default is 7 seconds.
     shim: {
         'underscore': {
+            deps: [],
             exports: '_'
         },
         'backbone': {
@@ -12,6 +17,7 @@ requirejs.config({
             exports: 'bootstrap'
         },
         'handlebars': {
+            deps: [],
             exports: 'Handlebars'
         },
     },
