@@ -28,12 +28,8 @@
     "test": "grunt --verbose"
   },
   "dependencies": {
-    "grunt": "0.3.17",
-    "rimraf": "~2.0.2",
-    "mime": "~1.2.5",
-    "mkdirp": ">=0.3.0",
-    "gzip-js": "~0.3.1",
-    "peking": "0.0.1"
+    "grunt": ">=0.3.17",
+    "requirejs": ">=2.1.2"
   },
   "devDependencies": {
     "grunt": "~0.3.17",
@@ -44,7 +40,9 @@
   },
   "build": 7,
   "keywords": [
-    "backbone",
-    "requirejs"
+    "grunt.js",
+    "backbone.js",
+    "require.js",
+    "phantom.js"
   ]
 }
