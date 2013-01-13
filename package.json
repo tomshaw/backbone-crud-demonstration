@@ -1,36 +1,50 @@
 {
-    "name": "bbcrud",
-    "description": "A Backbone.js project that demonstrates CRUD functionality using a Zend Framework 1.12 backend. ",
-    "version": "0.0.1",
-    "homepage": "https://github.com/tomshaw/bbcrud",
-    "author": {
-        "name": "Tom Shaw",
-        "email": "tom@tomshaw.info"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/tomshaw/bbcrud"
-    },
-    "bugs": {
-        "url": "https://github.com/tomshaw/bbcrud/issues"
-    },
-    "licenses": [{
-        "type": "MIT",
-        "url": "https://github.com/tomshaw/bbcrud/blob/master/docs/LICENSE-MIT"
-    }],
-    "main": "grunt.js",
-    "engines": {
-        "node": ">=0.9.0"
-    },
-    "scripts": {
-        "test": "grunt --verbose"
-    },
-    "dependencies": {
-        "grunt": "0.4.x",
-        "requirejs": "2.1.x"
-    },
-    "devDependencies": {
-        "grunt-contrib-jshint": "0.1.x"
-    },
-    "keywords": ["backbone", "requirejs"]
+  "name": "bbcrud",
+  "description": "A Backbone.js project that demonstrates CRUD functionality using a Zend Framework 1.12 backend. ",
+  "version": "0.0.1",
+  "homepage": "https://github.com/tomshaw/bbcrud",
+  "author": {
+    "name": "Tom Shaw",
+    "email": "tom@tomshaw.info"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomshaw/bbcrud"
+  },
+  "bugs": {
+    "url": "https://github.com/tomshaw/bbcrud/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/tomshaw/bbcrud/blob/master/docs/LICENSE-MIT"
+    }
+  ],
+  "main": "grunt.js",
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "grunt --verbose"
+  },
+  "dependencies": {
+    "grunt": "0.3.17",
+    "rimraf": "~2.0.2",
+    "mime": "~1.2.5",
+    "mkdirp": ">=0.3.0",
+    "gzip-js": "~0.3.1",
+    "peking": "0.0.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.17",
+    "grunt-contrib-jshint": "~0.1.0",
+    "grunt-contrib-nodeunit": "~0.1.0",
+    "grunt-contrib-uglify": "~0.1.0",
+    "grunt-jasmine-runner": "~0.6.0"
+  },
+  "build": 7,
+  "keywords": [
+    "backbone",
+    "requirejs"
+  ]
 }

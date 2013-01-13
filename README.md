@@ -34,6 +34,7 @@ Here's an example of what this project looks like.
   * Backbone.js 0.9.9
   * Require.js 2.1.2
   * Handlebars 1.0.rc.1
+  * Grunt.js 0.3.17
   * Underscore.js 1.4.3
   * jQuery 1.8.3
   * jQuery UI 1.9.2
@@ -48,6 +49,21 @@ Here's an example of what this project looks like.
   * Find the database and load it.
   * Update your application.ini and fill in your MySQL connection information.
   * Setup a virtual host like you normally do for a Zend Framework project.
+  
+## Grunt Tasks
+
+  Install Grunt.js 0.3.x globally. I'm currently running 0.3.17. 
+  
+    sudo npm install -g grunt
+    npm install
+    
+  Executing the predefined tasks that include linting concating and minifying source files.
+  
+    grunt default
+    
+  Headless unit testing using Phantom.js and Jasmine.
+  
+    grunt tests
   
 ## Running the Optimizer
 
