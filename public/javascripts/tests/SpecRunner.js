@@ -23,7 +23,9 @@ require.config({
         UserEditView: '../views/usereditview',
         UserListView: '../views/userlistview',
         UserModalView: '../views/usermodalview',
-        UserReviewView: '../views/userreviewview'
+        UserReviewView: '../views/userreviewview',
+        UserData: 'spec/userdata',
+        GridData: 'spec/griddata'
     },
     shim: {
         underscore: {
@@ -58,7 +60,7 @@ define(['jquery', 'underscore', 'jasminehtml'], function ($, _, jasmine) {
 
     var specs = [];
 
-    specs.push('spec/MySpec');
+    specs.push('spec/UserModel');
 
     $(function () {
         require(specs, function () {
