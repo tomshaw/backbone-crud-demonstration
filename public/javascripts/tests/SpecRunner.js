@@ -1,51 +1,59 @@
 require.config({
 	urlArgs : "bust=" + (new Date()).getTime(),
 	paths : {
-		jquery : '../lib/jquery-1.8.3',
-		jqueryui : '../lib/jquery-ui-1.9.2.min',
-		underscore : '../lib/underscore-1.4.3',
-		backbone : '../lib/backbone-0.9.9',
-		jasmine : 'lib/jasmine-1.3.1/jasmine',
-		jasminehtml : 'lib/jasmine-1.3.1/jasmine-html',
-		utils : '../utils',
-		Router : '../routers/router',
-		EmailCheck : '../models/emailcheck',
-		NameCheck : '../models/namecheck',
-		User : '../models/user',
-		UserAdd : '../models/useradd',
-		UserDelete : '../models/userdelete',
-		UserList : '../models/userlist',
-		UserListCollection : '../collections/userlistcollection',
-		HeaderView : '../views/headerview',
-		PaginatorView : '../views/paginatorview',
-		ProfilerView : '../views/profilerview',
-		UserAddView : '../views/useraddview',
-		UserEditView : '../views/usereditview',
-		UserListView : '../views/userlistview',
-		UserModalView : '../views/usermodalview',
-		UserReviewView : '../views/userreviewview',
-		UserData : 'mock/userdata',
-		GridData : 'mock/griddata'
+		'jquery' : '../lib/jquery-1.8.3',
+		'jqueryui' : '../lib/jquery-ui-1.9.2.min',
+		'underscore' : '../lib/underscore-1.4.3',
+		'backbone' : '../lib/backbone-0.9.9',
+		'jasmine' : 'lib/jasmine-1.3.1/jasmine',
+		'jasmine-html' : 'lib/jasmine-1.3.1/jasmine-html',
+		'utils' : '../utils',
+		'Router' : '../routers/router',
+		'EmailCheck' : '../models/emailcheck',
+		'NameCheck' : '../models/namecheck',
+		'User' : '../models/user',
+		'UserAdd' : '../models/useradd',
+		'UserDelete' : '../models/userdelete',
+		'UserList' : '../models/userlist',
+		'UserListCollection' : '../collections/userlistcollection',
+		'HeaderView' : '../views/headerview',
+		'PaginatorView' : '../views/paginatorview',
+		'ProfilerView' : '../views/profilerview',
+		'UserAddView' : '../views/useraddview',
+		'UserEditView' : '../views/usereditview',
+		'UserListView' : '../views/userlistview',
+		'UserModalView' : '../views/usermodalview',
+		'UserReviewView' : '../views/userreviewview',
+		'UserData' : 'mock/userdata',
+		'GridData' : 'mock/griddata'
 	},
 	shim : {
-		underscore : {
+		'underscore' : {
 			exports : "_"
 		},
-		backbone : {
+		'backbone' : {
 			deps : [ 'underscore', 'jquery' ],
 			exports : 'Backbone'
 		},
-		jasmine : {
+		'jasmine' : {
 			exports : 'jasmine'
 		},
-		jasminehtml : {
+		'jasmine-html' : {
 			deps : [ 'jasmine' ],
-			exports : 'jasmine'
+			exports : 'jasmine-html'
 		}
 	}
 });
 
-define([ 'jquery', 'jasminehtml' ], function($, jasmine) {
+/*
+require([ 'jasmine-html', 'spec/UserModel' ], function() {
+	'use strict';
+	jasmine.getEnv().addReporter(new jasmine.HtmlReporter());
+	jasmine.getEnv().execute();
+});
+*/
+
+define([ 'jquery', 'jasmine-html' ], function($) {
 
 	var jasmineEnv = jasmine.getEnv();
 	jasmineEnv.updateInterval = 1000;
@@ -69,7 +77,3 @@ define([ 'jquery', 'jasminehtml' ], function($, jasmine) {
 	});
 });
 
-/*
- * require(['spec/UserModel'], function() { jasmine.getEnv().addReporter(new
- * jasmine.TrivialReporter()); jasmine.getEnv().execute(); });
- */
