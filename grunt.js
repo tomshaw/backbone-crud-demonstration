@@ -1,12 +1,14 @@
 module.exports = function(grunt) {
-
+	'use strict';
 	grunt.initConfig({
 		pkg : '<json:package.json>',
 		lint : {
 			all : [ 'grunt.js', 'public/javascripts/models/*.js',
 					'public/javascripts/collections/*.js',
-					'public/javascripts/views/*.js',
-					'public/javascripts/routers/*.js' ]
+					'public/javascripts/views/*.js' ],
+			main : [ 'grunt.js', 'public/javascripts/models/*.js',
+					'public/javascripts/collections/*.js',
+					'public/javascripts/views/*.js' ]
 		},
 		jasmine : {
 			amd : true,
@@ -16,28 +18,11 @@ module.exports = function(grunt) {
 		},
 		watch : {
 			files : '<config:lint.files>',
-			tasks : 'default'
+			tasks : 'main'
 		},
 		jshint : {
 			options : {
-				browser : true,
-				curly : true,
-				eqeqeq : true,
-				immed : true,
-				latedef : true,
-				newcap : true,
-				noarg : true,
-				sub : true,
-				undef : true,
-				boss : true,
-				eqnull : true,
-				node : true,
-				es5 : true,
-				globals : {
-					exports : true,
-					require : true,
-					module : true
-				},
+				browser : true
 			},
 			all : [ 'grunt.js', 'public/javascripts/models/*.js',
 					'public/javascripts/collections/*.js',
