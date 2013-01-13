@@ -50,6 +50,12 @@ Here's an example of what this project looks like.
   * Update your application.ini and fill in your MySQL connection information.
   * Setup a virtual host like you normally do for a Zend Framework project.
   
+## Jasmine Unit Tests
+
+  A simple route has been defined to access Jasmine Unit Tests. 
+  
+    http://bbcrud.dev/jasmine
+  
 ## Grunt Tasks
 
   Install Grunt.js 0.3.x globally. I'm currently running 0.3.17. 
@@ -65,7 +71,7 @@ Here's an example of what this project looks like.
   
     grunt tests
   
-## Running the Optimizer
+## Running the Require.js Optimizer
 
   Make sure you have Node.js installed. In the build directory run the following commands.
   
