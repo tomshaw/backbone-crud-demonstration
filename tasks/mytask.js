@@ -12,10 +12,12 @@ module.exports = function( grunt ) {
         
         var pkg = require('../package.json');
         
-        console.log('grunt-cli: ' + pkg.description + ' (v' + pkg.version + ')');
+        console.log('BBCRUD: ' + pkg.description + ' (v' + pkg.version + ')');
         console.log('');
       
-        //grunt.task.run('concat min');
+        grunt.task.run('concat min');
+        
+        done();
 
     });
 

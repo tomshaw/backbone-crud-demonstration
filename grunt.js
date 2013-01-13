@@ -93,7 +93,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-jasmine-runner');
 
-    grunt.registerTask('default', 'lint concat min ibuild');
+    grunt.registerTask('default', 'lint concat min ibuild mytask');
     
     grunt.registerTask('tests', 'jasmine');
 
