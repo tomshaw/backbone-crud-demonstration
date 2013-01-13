@@ -2,8 +2,7 @@ define('UserEditView', [
     'jquery',
     'underscore',
     'backbone',
-    'utils'
-], function ($, _, Backbone, utils) {
+    'utils'], function ($, _, Backbone, utils) {
 
     var UserEditView = Backbone.View.extend({
 
@@ -59,7 +58,7 @@ define('UserEditView', [
             var page = this.getPage();
             this.model.save(null, {
                 success: function (response) {
-                	Backbone.history.navigate('#index/page/' + page, true);
+                    Backbone.history.navigate('#index/page/' + page, true);
                     utils.showAlert('Success!', 'System user has been updated successfully!', 'alert-success');
                 },
                 error: function () {

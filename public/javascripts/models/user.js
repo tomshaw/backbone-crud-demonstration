@@ -12,7 +12,7 @@ define('User', [
         initialize: function () {
             this.validators = {};
             this.validators.username = function (value) {
-                if (value.length == 0) {
+                if (value.length === 0) {
                     return {
                         isValid: false,
                         message: 'You must choose a username.'
@@ -31,7 +31,7 @@ define('User', [
             };
 
             this.validators.fullname = function (value) {
-                if (value.length == 0) {
+                if (value.length === 0) {
                     return {
                         isValid: false,
                         message: 'You must enter your full name.'
@@ -44,7 +44,7 @@ define('User', [
             };
 
             this.validators.email = function (value) {
-                if (value.length == 0) {
+                if (value.length === 0) {
                     return {
                         isValid: false,
                         message: 'You must enter an email address!'
@@ -63,7 +63,7 @@ define('User', [
             };
 
             this.validators.identity = function (value) {
-                return value == "-1" ? {
+                return value === "-1" ? {
                     isValid: false,
                     message: "You must select a user identity level."
                 } : {
@@ -72,7 +72,7 @@ define('User', [
             };
 
             this.validators.validated = function (value) {
-                return value == "-1" ? {
+                return value === "-1" ? {
                     isValid: false,
                     message: "You must select if user has been validated."
                 } : {

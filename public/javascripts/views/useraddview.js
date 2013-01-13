@@ -4,8 +4,7 @@ define('UserAddView', [
     'utils',
     'backbone',
     'NameCheck',
-    'EmailCheck'
-], function ($, _, utils, Backbone, NameCheck, EmailCheck) {
+    'EmailCheck'], function ($, _, utils, Backbone, NameCheck, EmailCheck) {
 
     var UserAddView = Backbone.View.extend({
 
@@ -94,7 +93,7 @@ define('UserAddView', [
             var page = 1;
             this.model.save(null, {
                 success: function (response) {
-                	Backbone.history.navigate('#index/page/' + page, true);
+                    Backbone.history.navigate('#index/page/' + page, true);
                     utils.showAlert('Success!', 'Customer saved successfully!', 'alert-success');
                 },
                 error: function () {

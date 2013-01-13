@@ -6,9 +6,8 @@ define('UserListView', [
     'backbone',
     'PaginatorView',
     'ProfilerView',
-    'UserDelete'
-], function ($, ui, utils, _, Backbone, PaginatorView, ProfilerView, UserDelete) {
-	
+    'UserDelete'], function ($, ui, utils, _, Backbone, PaginatorView, ProfilerView, UserDelete) {
+
     var UserListView = Backbone.View.extend({
 
         template: _.template($('#UserListView').html()),
@@ -83,7 +82,7 @@ define('UserListView', [
             utils.hideAlert();
             var href = $(event.target).closest('tr').attr('data-href');
             if (typeof (href) !== "undefined") {
-            	Backbone.history.navigate(href, true);
+                Backbone.history.navigate(href, true);
             }
         },
 
@@ -96,7 +95,7 @@ define('UserListView', [
             });
             userDelete.destroy({
                 success: function (response) {
-                	Backbone.history.navigate('#index/page/1', true);
+                    Backbone.history.navigate('#index/page/1', true);
                     utils.showAlert('Success!', 'Customer deleted successfully!', 'alert-success');
                     //window.history.back();
                 }
@@ -124,7 +123,7 @@ define('UserListView', [
         },
 
         gridreset: function (event) {
-        	Backbone.history.navigate("/", true);
+            Backbone.history.navigate("/", true);
         }
 
     });
