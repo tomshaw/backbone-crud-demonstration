@@ -88,3 +88,100 @@ tr th a:hover {
 .table td {
 	vertical-align: middle;
 }
+
+.tucked-corners-top {
+	position: relative;
+	width: 560px;
+	min-height: 250px;
+	margin: 150px auto;
+	padding: 20px;
+	background-color: #fff; /* Fallback */
+	background: 
+	-webkit-linear-gradient(45deg, transparent 10px, #fff 10px),  
+	-webkit-linear-gradient(135deg, transparent 10px, #fff 10px),  
+	-webkit-linear-gradient(225deg, transparent 10px, #fff 10px),  
+	-webkit-linear-gradient(315deg, transparent 10px, #fff 10px);
+	background: -moz-linear-gradient(45deg, transparent 10px, #fff 10px),  
+	-moz-linear-gradient(135deg, transparent 10px, #fff 10px),  
+	-moz-linear-gradient(225deg, transparent 10px, #fff 10px),  
+	-moz-linear-gradient(315deg, transparent 10px, #fff 10px);
+	background: -o-linear-gradient(45deg, transparent 10px, #fff 10px),  
+	-o-linear-gradient(135deg, transparent 10px, #fff 10px),  
+	-o-linear-gradient(225deg, transparent 10px, #fff 10px),  
+	-o-linear-gradient(315deg, transparent 10px, #fff 10px);
+	background-position: bottom left, bottom right, top right, top left;
+	background-size: 50% 50%;
+	background-repeat: no-repeat;
+	-moz-box-shadow: 0 20px 10px -20px rgba(0, 0, 0, .5);
+	-webkit-box-shadow: 0 20px 10px -20px rgba(0, 0, 0, .5);
+	box-shadow: 0 20px 10px -20px rgba(0, 0, 0, .5);
+}
+[class*='tucked-corners-']::before,  
+[class*='tucked-corners-']::after {
+	content: '';
+	position: absolute;
+	height: 20px;
+	width: 80px;
+	-webkit-box-shadow: 0 8px 15px -7px rgba(0, 0, 0, .5);
+	-moz-box-shadow: 0 8px 15px -7px rgba(0, 0, 0, .5);
+	box-shadow: 0 8px 15px -7px rgba(0, 0, 0, .5);
+	box-shadow: none\9; /* Do not show on IE9 #needed */
+}
+.tucked-corners-top::before,  
+.tucked-corners-top::after {
+	top: -10px;
+}
+.tucked-corners-bottom::before,  
+.tucked-corners-bottom::after {
+	bottom: -10px;
+}
+.tucked-corners-top::before,  
+.tucked-corners-bottom::before {
+	left: -42px;
+}
+.tucked-corners-top::after,  
+.tucked-corners-bottom::after {
+	right: -42px;
+}
+.tucked-corners-top::before {
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+.tucked-corners-top::after {
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+.tucked-corners-bottom::before {
+	-webkit-transform: rotate(-135deg);
+	-moz-transform: rotate(-135deg);
+	-ms-transform: rotate(-135deg);
+	-o-transform: rotate(-135deg);
+	transform: rotate(-135deg);
+}
+.tucked-corners-bottom::after {
+	-webkit-transform: rotate(135deg);
+	-moz-transform: rotate(135deg);
+	-ms-transform: rotate(135deg);
+	-o-transform: rotate(135deg);
+	transform: rotate(135deg);
+}
+#silhouette {
+	background: #000 url(../img/silhouette.png);
+	width:175px;
+	height:175px;
+	display:inline-block;
+	float:left;
+}
+#tucked-content {
+	float:left;
+	width:350px;
+	padding:5px;
+	margin-left:20px;
+	margin-top:-20px;
+}

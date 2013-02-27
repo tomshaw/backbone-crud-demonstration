@@ -129,7 +129,22 @@
 </script>
 
 <script id="UserReviewView" type="text/html">
-<h1>User Review View - <%= _.escape(email || '') %><h1>
+<style>
+body {
+	background: #f5f5f5;
+}
+</style>
+<div class="tucked-corners-top">
+  <div class="tucked-corners-bottom">
+    <div id="silhouette"></div>
+    <div id="tucked-content"> 
+      <h3 style="color:#1e8cbe;"><%= _.escape(fullname || '') %></h3>
+      <h4 style="margin-top:-5px;color:rgba(0,0,0,0.85);"><%= _.escape(email || '') %></h4>
+      <p>&nbsp;Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque mi ipsum, ullamcorper sit amet lacinia eget, tempus feugiat velit. Aenean fermentum ipsum ut purus pellentesque vitae accumsan nulla vehicula. Pellentesque sed arcu dolor.</p>
+      <p>Sincerly, <%= _.escape(fullname || '') %></p>
+    </div>
+  </div>
+</div>
 </script>
 
 <script id="UserModalView" type="text/html">
