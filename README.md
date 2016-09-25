@@ -96,7 +96,7 @@ Here's an example of what this project looks like.
 
 (The MIT License)
 
-Copyright (c) 2012 Tom Shaw &lt;tom@visfx.com&gt;
+Copyright (c) 2012 Tom Shaw &lt;tom@visfx.me&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
