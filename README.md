@@ -10,7 +10,7 @@
                                                                            \ \____/      
                                                                             \/___/       
     (_'_______________________________________________________________________________'_)
-    (_.ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ._)
+    (_.Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘Ã‘._)
       
   BBCRUD is a sample Backbone.js CRUD application (C)reate (R)ead (U)pdate (D)elete developed to learn how to use Backbone.js. I'm using Zend Framework 1.12 on the server end, development & testing is being done running OS X v10.8. Download the release-v0.1 tag for the non AMD version.
   
@@ -92,15 +92,11 @@ Here's an example of what this project looks like.
 
   * Implement some worthwhile unit tests.
 
-# Questions or Comments?
-
-Email: tom@tomshaw.info
-
 ## License 
 
 (The MIT License)
 
-Copyright (c) 2012 Tom Shaw &lt;tom@tomshaw.info&gt;
+Copyright (c) 2012 Tom Shaw &lt;tom@visfx.com&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
